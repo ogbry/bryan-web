@@ -90,7 +90,10 @@ export default function About() {
                 {[
                   { number: "5+", label: "Years Experience" },
                   { number: "2", label: "AWS Certifications" },
-                  { number: "10+", label: "Projects Completed" },
+                  {
+                    number: "10+",
+                    label: "Web Applications Built (Solo & Team)",
+                  },
                 ].map((stat, i) => (
                   <motion.div
                     key={stat.label}
