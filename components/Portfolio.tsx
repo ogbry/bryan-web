@@ -1,45 +1,81 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ImageCarousel from "./ImageCarousel";
+import frontendcourseimg1 from "../assets/frontendcourseimg1.png";
+import frontendcourseimg2 from "../assets/frontendcourseimg2.png";
+import boomerangimg1 from "../assets/boomerang_img1.png";
+import boomerangimg2 from "../assets/boomerang_img2.png";
+import boomerangimg3 from "../assets/boomerang_img3.png";
+import boomerangimg4 from "../assets/boomerang_img4.png";
+import boomerangimg5 from "../assets/boomerang_img5.png";
 
 const projects = [
+  // {
+  //   title: "AI-Powered Call Analysis Platform",
+  //   description:
+  //     "Enterprise solution leveraging Deepgram for speech-to-text transcription and GPT API for natural language processing to analyze customer calls in real-time",
+  //   images: [
+  //     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
+  //     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
+  //     "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=800&h=500&fit=crop",
+  //   ],
+  //   tech: ["React", "Node.js", "Deepgram", "GPT API", "MongoDB"],
+  //   // gradient: "from-purple-500 to-pink-500",
+  //   year: "2024",
+  // },
+  // {
+  //   title: "Internal CRM System",
+  //   description:
+  //     "Comprehensive CRM platform built with React and TypeScript for managing business processes, workflows, and advanced analytics dashboards",
+  //   images: [
+  //     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
+  //     "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&h=500&fit=crop",
+  //     "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop",
+  //   ],
+  //   tech: ["React", "TypeScript", "Node.js", "PostgreSQL"],
+  //   // gradient: "from-blue-500 to-cyan-500",
+  //   year: "2023",
+  // },
   {
-    title: "AI-Powered Call Analysis Platform",
-    description: "Enterprise solution leveraging Deepgram for speech-to-text transcription and GPT API for natural language processing to analyze customer calls in real-time",
-    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?w=800&h=500&fit=crop",
-    tech: ["React", "Node.js", "Deepgram", "GPT API", "MongoDB"],
-    gradient: "from-purple-500 to-pink-500",
-    year: "2024"
+    title: "Boomdemand CRM",
+    description:
+      "Boomerang (BoomDemand) is a GPT-enabled CRM that automates email, SMS, and call workflows to improve customer communication and engagement.",
+    images: [
+      boomerangimg1,
+      boomerangimg2,
+      boomerangimg3,
+      boomerangimg4,
+      boomerangimg5,
+    ],
+    tech: ["React", "Node.js", "Python", "FastAPI", "AWS", "WebSockets"],
+    // gradient: "from-emerald-500 to-teal-500",
+    year: "2023",
   },
   {
-    title: "Internal CRM System",
-    description: "Comprehensive CRM platform built with React and TypeScript for managing business processes, workflows, and advanced analytics dashboards",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
-    tech: ["React", "TypeScript", "Node.js", "PostgreSQL"],
-    gradient: "from-blue-500 to-cyan-500",
-    year: "2023"
-  },
-  {
-    title: "Scalable RESTful API Services",
-    description: "Microservices architecture with serverless functions on AWS Lambda, providing high-performance backend services for multiple applications",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=500&fit=crop",
-    tech: ["Node.js", "Python", "FastAPI", "AWS Lambda"],
-    gradient: "from-emerald-500 to-teal-500",
-    year: "2023"
-  },
-  {
-    title: "Responsive Web Applications",
-    description: "Dynamic, user-focused web applications with Redux state management and modern responsive design patterns using TailwindCSS",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop",
-    tech: ["React", "Redux", "TailwindCSS", "MaterialUI"],
-    gradient: "from-orange-500 to-red-500",
-    year: "2022"
+    title: "Frontend BoomCamp",
+    description:
+      "A web application designed for BoomCamp students and mentees. It centralizes lessons, activities, grades, and other essential resources needed by both mentees and mentors, allowing them to access everything easily anytime and anywhere.",
+    images: [frontendcourseimg1, frontendcourseimg2],
+    tech: [
+      "React",
+      "Context API",
+      "Material UI",
+      "Jest",
+      "AntDesign",
+      "Gatsby",
+    ],
+    // gradient: "from-orange-500 to-red-500",
+    year: "2019",
   },
 ];
 
 export default function Portfolio() {
   return (
-    <section id="projects" className="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
+    <section
+      id="projects"
+      className="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800"
+    >
       <div className="container px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -52,7 +88,8 @@ export default function Portfolio() {
             Featured Projects
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
-            A showcase of my recent work in full-stack development, AI integration, and cloud solutions
+            A showcase of my recent work in full-stack development, AI
+            integration, and cloud solutions
           </p>
         </motion.div>
 
@@ -67,15 +104,15 @@ export default function Portfolio() {
               whileHover={{ y: -8 }}
               className="group relative bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
             >
-              {/* Image */}
-              <div className="relative h-56 overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-90`}></div>
-                <img
-                  src={project.image}
+              {/* Image Carousel */}
+              <div className="relative">
+                <ImageCarousel
+                  images={project.images}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  // gradient={project.gradient}
+                  height="h-56"
                 />
-                <div className="absolute top-4 right-4 px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-full text-xs font-semibold">
+                <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-full text-xs font-semibold">
                   {project.year}
                 </div>
               </div>
@@ -111,4 +148,3 @@ export default function Portfolio() {
     </section>
   );
 }
-

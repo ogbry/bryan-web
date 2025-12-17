@@ -17,11 +17,14 @@ export default function Footer() {
                 alt="Logo"
                 className="w-12 h-8"
               />
-              <span className="text-xl font-bold dark:text-white">Bryan Alfuente</span>
+              <span className="text-xl font-bold dark:text-white">
+                Bryan Alfuente
+              </span>
             </div>
             <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed max-w-md">
-              Software Engineer specializing in full-stack development, AI solutions, and cloud technologies.
-              Building scalable, user-focused applications with modern technologies.
+              Software Engineer specializing in full-stack development, AI
+              solutions, and cloud technologies. Building scalable, user-focused
+              applications with modern technologies.
             </p>
           </div>
 
@@ -29,10 +32,10 @@ export default function Footer() {
             <h3 className="font-semibold mb-4 dark:text-white">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               {[
-                { name: 'Skills', href: '#services' },
-                { name: 'Projects', href: '#projects' },
-                { name: 'Experience', href: '#experience' },
-                { name: 'Contact', href: '#contact' }
+                { name: "Skills", href: "#services" },
+                { name: "Projects", href: "#projects" },
+                { name: "Experience", href: "#experience" },
+                { name: "Contact", href: "#contact" },
               ].map((link) => (
                 <li key={link.name}>
                   <a
@@ -64,9 +67,9 @@ export default function Footer() {
               </li>
               <li className="flex gap-3 mt-4">
                 {[
-                  { icon: '💼', label: 'LinkedIn' },
-                  { icon: '🐙', label: 'GitHub' },
-                  { icon: '🐦', label: 'Twitter' }
+                  { icon: "💼", label: "LinkedIn" },
+                  { icon: "🐙", label: "GitHub" },
+                  { icon: "🐦", label: "Twitter" },
                 ].map((social, i) => (
                   <motion.a
                     key={i}
@@ -90,9 +93,13 @@ export default function Footer() {
             <span>Built with</span>
             <span className="text-blue-600 dark:text-blue-400">React</span>
             <span>+</span>
+            <span className="text-blue-600 dark:text-blue-400">NextJS</span>
+            <span>+</span>
             <span className="text-blue-600 dark:text-blue-400">TypeScript</span>
             <span>+</span>
-            <span className="text-blue-600 dark:text-blue-400">Tailwind CSS</span>
+            <span className="text-blue-600 dark:text-blue-400">
+              Tailwind CSS
+            </span>
           </div>
         </div>
       </div>

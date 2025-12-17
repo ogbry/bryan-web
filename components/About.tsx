@@ -27,10 +27,17 @@ export default function About() {
                 <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-8 flex items-center justify-center h-96">
                   <div className="text-center">
                     <div className="w-40 h-40 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-6xl">
-                      👨‍💻
+                      <img
+                        className="rounded-full"
+                        src="https://lh3.googleusercontent.com/a/ACg8ocJQY9n6pIS4G8l7fgLduAbcEosRKQ3ZUABLTcwUEY2x4M203eGP=s288-c-no"
+                      />
                     </div>
-                    <div className="text-2xl font-bold text-slate-700 dark:text-slate-200">Bryan Alfuente</div>
-                    <div className="text-slate-600 dark:text-slate-400">Software Engineer</div>
+                    <div className="text-2xl font-bold text-slate-700 dark:text-slate-200">
+                      Bryan Alfuente
+                    </div>
+                    <div className="text-slate-600 dark:text-slate-400">
+                      Software Engineer
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -48,16 +55,33 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                 <p className="text-lg">
-                  I'm a passionate <span className="font-semibold text-slate-900 dark:text-white">Software Engineer</span> with over 5 years of experience in building robust web applications and AI-powered solutions.
+                  I'm a passionate{" "}
+                  <span className="font-semibold text-slate-900 dark:text-white">
+                    Software Engineer
+                  </span>{" "}
+                  with over 5 years of experience building robust web
+                  applications and working closely with teams on solutions that
+                  leverage AI technologies.
                 </p>
                 <p>
-                  Currently based in <span className="font-semibold text-slate-900 dark:text-white">Legazpi City, Philippines</span>, I specialize in full-stack development with expertise in React, Node.js, TypeScript, and AWS cloud services.
+                  Currently based in{" "}
+                  <span className="font-semibold text-slate-900 dark:text-white">
+                    Legazpi City, Philippines
+                  </span>
+                  , I specialize in full-stack development with expertise in
+                  React, Node.js, TypeScript, and AWS cloud services.
                 </p>
                 <p>
-                  I've had the privilege of working on cutting-edge projects including an AI-powered call analysis platform using Deepgram and GPT API, and developing enterprise-grade CRM systems that streamline business operations.
+                  I've had the privilege of working on cutting-edge projects
+                  including an AI-powered call analysis platform using Deepgram,
+                  Slack integrations, workflows and GPT API, and developing
+                  enterprise-grade CRM systems like Vtiger and GoHighLevel that
+                  streamline business operations.
                 </p>
                 <p>
-                  When I'm not coding, I enjoy mentoring junior developers and staying up-to-date with the latest technologies in web development and artificial intelligence.
+                  When I'm not coding, I enjoy mentoring junior developers and
+                  staying up-to-date with the latest technologies in web
+                  development.
                 </p>
               </div>
 

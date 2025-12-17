@@ -2,10 +2,17 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import ImageCarousel from "./ImageCarousel";
+// TODO: Add your image files to /Users/bryanalfuente/Projects/my-portfolio/assets/ first!
+// Then uncomment these imports:
+import spero_img1 from "../assets/spero_img1.jpeg";
+import spero_img2 from "../assets/spero_img2.jpeg";
+import spero_img3 from "../assets/spero_img3.jpeg";
+import boomsourcing_img1 from "../assets/boomsourcing_img1.jpg";
 
 const experiences = [
   {
-    company: "BOOM AI Solutions OPC",
+    company: "BOOM AI Solutions OPC / Spero",
     role: "Software Engineer",
     period: "Aug 2022 - Dec 2024",
     location: "Remote",
@@ -13,8 +20,9 @@ const experiences = [
       "Developed high-performance web applications using React.js and Node.js",
       "Built AI-powered call analysis tool with Deepgram and GPT API",
       "Designed RESTful APIs using Node.js, Python, and AWS services",
-      "Contributed to internal CRM development enhancing business processes"
-    ]
+      "Contributed to internal CRM development enhancing business processes",
+    ],
+    images: [spero_img1, spero_img2, spero_img3],
   },
   {
     company: "Boomsourcing INC",
@@ -24,8 +32,9 @@ const experiences = [
     achievements: [
       "Developed reusable, modular web components using React.js",
       "Enhanced user experience with new interface features",
-      "Mentored junior developers fostering skill growth and collaboration"
-    ]
+      "Mentored junior developers fostering skill growth and collaboration",
+    ],
+    images: [boomsourcing_img1],
   },
 ];
 
@@ -34,13 +43,15 @@ const certifications = [
     name: "AWS Certified AI Practitioner",
     issuer: "Amazon Web Services",
     date: "January 2025",
-    badgeUrl: "https://www.credly.com/badges/414c06af-31b9-4a2e-af9d-50c1d33b848c"
+    badgeUrl:
+      "https://www.credly.com/badges/414c06af-31b9-4a2e-af9d-50c1d33b848c",
   },
   {
     name: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     date: "January 2024",
-    badgeUrl: "https://www.credly.com/badges/5d911972-3388-4324-8783-9cc83ee1e441"
+    badgeUrl:
+      "https://www.credly.com/badges/5d911972-3388-4324-8783-9cc83ee1e441",
   },
 ];
 
@@ -88,10 +99,26 @@ export default function Pricing() {
                   </div>
                 </div>
 
+                {/* Work Moments Carousel */}
+                {exp.images && exp.images.length > 0 && (
+                  <div className="mb-6">
+                    <ImageCarousel
+                      images={exp.images}
+                      alt={`${exp.company} - ${exp.role}`}
+                      height="h-56"
+                    />
+                  </div>
+                )}
+
                 <ul className="space-y-2">
                   {exp.achievements.map((achievement, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-slate-600 dark:text-slate-400">
-                      <span className="text-slate-400 dark:text-slate-600 mt-1.5">•</span>
+                    <li
+                      key={idx}
+                      className="flex items-start gap-3 text-slate-600 dark:text-slate-400"
+                    >
+                      <span className="text-slate-400 dark:text-slate-600 mt-1.5">
+                        •
+                      </span>
                       <span>{achievement}</span>
                     </li>
                   ))}
@@ -140,8 +167,18 @@ export default function Pricing() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-medium rounded-lg transition-all hover:scale-105"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                    />
                   </svg>
                   View Badge
                 </a>
