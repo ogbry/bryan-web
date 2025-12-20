@@ -29,7 +29,7 @@ export default function About() {
                     <div className="w-40 h-40 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-6xl">
                       <img
                         className="rounded-full"
-                        src="https://lh3.googleusercontent.com/a/ACg8ocJQY9n6pIS4G8l7fgLduAbcEosRKQ3ZUABLTcwUEY2x4M203eGP=s288-c-no"
+                        src="https://media.licdn.com/dms/image/v2/C5103AQG1RHqlUL8qTg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1558877608767?e=1767830400&v=beta&t=z-nTmUUhPJIo9Z-Ww31rl4-4GZ-Bew2RUhd6xHJPPY0"
                       />
                     </div>
                     <div className="text-2xl font-bold text-slate-700 dark:text-slate-200">
