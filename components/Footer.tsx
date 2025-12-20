@@ -53,14 +53,6 @@ export default function Footer() {
             <h3 className="font-semibold mb-4 dark:text-white">Connect</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="mailto:alfuente.bryan25@gmail.com"
-                  className="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                >
-                  alfuente.bryan25@gmail.com
-                </a>
-              </li>
-              <li>
                 <div className="text-slate-600 dark:text-slate-400">
                   Legazpi City, Albay, Philippines
                 </div>

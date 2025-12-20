@@ -18,7 +18,7 @@ const experiences = [
     location: "Remote",
     achievements: [
       "Developed high-performance web applications using React.js and Node.js",
-      "Built AI-powered call analysis tool with Deepgram and GPT API",
+      "Contributed to an AI-powered call analysis tool using Deepgram and GPT APIs in collaboration with a data scientist.",
       "Designed RESTful APIs using Node.js, Python, and AWS services",
       "Contributed to internal CRM development enhancing business processes",
     ],

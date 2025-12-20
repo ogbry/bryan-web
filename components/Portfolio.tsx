@@ -94,8 +94,8 @@ export default function Portfolio() {
             Featured Projects
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
-            A showcase of my recent work in full-stack development, AI
-            integration, and cloud solutions
+            A showcase of my recent work in full-stack development, AI-assisted
+            workflows, and cloud-deployed solutions.
           </p>
         </motion.div>
 
