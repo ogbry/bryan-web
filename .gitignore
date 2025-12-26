@@ -28,7 +28,6 @@ lerna-debug.log*
 out
 # gatsby
 .cache/
-public
 # vuepress
 .vuepress/dist
 # temp
