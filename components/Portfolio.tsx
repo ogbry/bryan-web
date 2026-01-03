@@ -13,6 +13,9 @@ import resumebuilder_img1 from "../assets/resumebuilder_img1.png";
 import resumebuilder_img2 from "../assets/resumebuilder_img2.png";
 import resumebuilder_img3 from "../assets/resumebuilder_img3.png";
 import resumebuilder_img4 from "../assets/resumebuilder_img4.png";
+import hris_img1 from "../assets/hris_img1.png";
+import hris_img2 from "../assets/hris_img2.png";
+import hris_img3 from "../assets/hris_img3.png";
 
 const projects = [
   {
@@ -22,6 +25,17 @@ const projects = [
     tech: [],
     year: "2025",
     inProgress: true, // This will show skeleton loader
+  },
+  {
+    title: "HRIS Portal",
+    description:
+      "A Human Resources Information System Portal for employee management, featuring recruitment tracking, turnover analytics, compliance monitoring, and organizational oversight.",
+    images: [hris_img1, hris_img2, hris_img3],
+    tech: ["NextJS", "TypeScript", "TailwindCSS"],
+    year: "2025",
+    website: "https://hris-dashboard-nextjs.vercel.app",
+    type: "Personal",
+    status: "In Progress",
   },
   {
     title: "Smart Resume Builder",
@@ -262,6 +276,26 @@ export default function Portfolio() {
                             )}
                           </svg>
                           {project.type}
+                        </span>
+                      )}
+
+                      {/* Status Badge */}
+                      {project.status && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300">
+                          <svg
+                            className="w-3.5 h-3.5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                          {project.status}
                         </span>
                       )}
                     </div>
