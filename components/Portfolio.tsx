@@ -40,14 +40,13 @@ const projects = [
     website: "https://aba-iss-portal.vercel.app/admin/dashboard",
   },
   {
-    title: "HRIS Portal",
+    title: "HRIS Portal (Demo for Client)",
     description:
       "A Human Resources Information System Portal for employee management, featuring recruitment tracking, turnover analytics, compliance monitoring, and organizational oversight.",
     images: [hris_img1, hris_img2, hris_img3],
     tech: ["NextJS", "TypeScript", "TailwindCSS"],
     year: "2025",
     website: "https://hris-dashboard-nextjs.vercel.app",
-    type: "Personal",
     status: "In Progress",
   },
   {
