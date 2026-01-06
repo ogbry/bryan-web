@@ -16,6 +16,9 @@ import resumebuilder_img4 from "../assets/resumebuilder_img4.png";
 import hris_img1 from "../assets/hris_img1.png";
 import hris_img2 from "../assets/hris_img2.png";
 import hris_img3 from "../assets/hris_img3.png";
+import abaiss_img1 from "../assets/abaiss_img1.png";
+import abaiss_img2 from "../assets/abaiss_img2.png";
+import abaiss_img3 from "../assets/abaiss_img3.png";
 
 const projects = [
   {
@@ -25,6 +28,16 @@ const projects = [
     tech: [],
     year: "2025",
     inProgress: true, // This will show skeleton loader
+  },
+  {
+    title: "ABAISS Platform (Demo for Client)",
+    description:
+      "A comprehensive behavioral health management platform that automates client intake, authorization tracking, staff assignment, and quality assurance processes. Built with React and integrates Monday.com CRM with NAOMI, Rethink, and MCO systems to eliminate manual data entry and ensure compliance with authorization timelines.",
+    images: [abaiss_img1, abaiss_img2, abaiss_img3],
+    tech: ["React", "Node.js", "Monday.com API", "TailwindCSS"],
+    status: "In Progress",
+    year: "2025",
+    website: "https://aba-iss-portal.vercel.app/admin/dashboard",
   },
   {
     title: "HRIS Portal",

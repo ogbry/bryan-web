@@ -158,6 +158,7 @@ export default function Hero() {
                 { name: "Next.js", color: "from-slate-700 to-slate-900" },
                 { name: "TypeScript", color: "from-blue-600 to-blue-700" },
                 { name: "Node.js", color: "from-green-600 to-green-700" },
+                { name: "NestJS", color: "from-red-500 to-pink-600" },
                 { name: "Python", color: "from-yellow-500 to-yellow-600" },
                 { name: "AWS", color: "from-orange-500 to-orange-600" },
                 { name: "Docker", color: "from-blue-400 to-cyan-600" },
