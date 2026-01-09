@@ -19,6 +19,8 @@ import hris_img3 from "../assets/hris_img3.png";
 import abaiss_img1 from "../assets/abaiss_img1.png";
 import abaiss_img2 from "../assets/abaiss_img2.png";
 import abaiss_img3 from "../assets/abaiss_img3.png";
+import mayon_img1 from "../assets/mayon_img1.png";
+import mayon_img2 from "../assets/mayon_img2.png";
 
 const projects = [
   {
@@ -28,6 +30,24 @@ const projects = [
     tech: [],
     year: "2025",
     inProgress: true, // This will show skeleton loader
+  },
+  {
+    title: "Mayon Safety Zone",
+    description:
+      "A real-time geolocation web app that helps users determine their proximity to Mayon Volcano's 6km Permanent Danger Zone. Built with React, TypeScript, Leaflet, and Nominatim API for location search.",
+    images: [mayon_img1, mayon_img2],
+    tech: [
+      "React",
+      "Typescript",
+      "TailwindCSS",
+      "Geolocation API",
+      "OpenStreetMap",
+      "Framer Motion",
+    ],
+    year: "2025",
+    website: "https://mayon-geo-pdz.vercel.app/",
+    github: "https://github.com/ogbry/mayon-geo-pdz",
+    type: "Personal",
   },
   {
     title: "ABAISS Platform (Demo for Client)",
