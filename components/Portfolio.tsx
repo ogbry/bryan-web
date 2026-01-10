@@ -32,9 +32,9 @@ const projects = [
     inProgress: true, // This will show skeleton loader
   },
   {
-    title: "Mayon Safety Zone",
+    title: "Ligtas Mayon",
     description:
-      "A real-time geolocation web app that helps users determine their proximity to Mayon Volcano's 6km Permanent Danger Zone. Built with React, TypeScript, Leaflet, and Nominatim API for location search.",
+      "Ligtas Mayon is a web-based safety monitoring tool for communities living near Mayon Volcano in Albay, Philippines. It provides real-time distance calculations to the 6km Permanent Danger Zone, evacuation center routing via Google Maps, and safety guidelines—all available in English, Filipino, and Bikol.",
     images: [mayon_img1, mayon_img2],
     tech: [
       "React",
@@ -46,7 +46,7 @@ const projects = [
       "Vercel",
     ],
     year: "2025",
-    website: "https://mayon-geo-pdz.vercel.app/",
+    website: "https://mayon-geo.vercel.app/",
     github: "https://github.com/ogbry/mayon-geo-pdz",
     type: "Personal",
   },
