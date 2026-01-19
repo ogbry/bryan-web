@@ -78,11 +78,6 @@ export default function About() {
                   enterprise-grade CRM systems like Vtiger and GoHighLevel that
                   streamline business operations.
                 </p>
-                <p>
-                  When I'm not coding, I enjoy mentoring junior developers and
-                  staying up-to-date with the latest technologies in web
-                  development.
-                </p>
               </div>
 
               {/* Stats */}
