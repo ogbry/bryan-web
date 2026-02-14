@@ -29,7 +29,8 @@ export default function About() {
                     <div className="w-40 h-40 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-6xl">
                       <img
                         className="rounded-full"
-                        src="https://media.licdn.com/dms/image/v2/C5103AQG1RHqlUL8qTg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1558877608767?e=1769644800&v=beta&t=PDZ9HlVhfZswwzGXiW5zjb6lpG2KZ6RTtUWqtgnS0EQ"
+                        src="/image.jpeg"
+                        alt="Bryan Alfuente"
                       />
                     </div>
                     <div className="text-2xl font-bold text-slate-700 dark:text-slate-200">
