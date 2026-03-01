@@ -12,6 +12,13 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
+# Build-time env vars for NEXT_PUBLIC_ variables
+ARG NEXT_PUBLIC_BOT_URL
+ARG NEXT_PUBLIC_RESTDB_API_KEY
+ENV NEXT_PUBLIC_BOT_URL=$NEXT_PUBLIC_BOT_URL
+ENV NEXT_PUBLIC_RESTDB_API_KEY=$NEXT_PUBLIC_RESTDB_API_KEY
+
 RUN npm run build
 
 # Production runner
