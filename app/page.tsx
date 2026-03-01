@@ -9,6 +9,7 @@ import Portfolio from "../components/Portfolio";
 import Pricing from "../components/Pricing";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import ChatWidget from "../components/ChatWidget";
 
 export default function Home() {
   const [theme, setTheme] = useState<string>("dark");
@@ -65,6 +66,7 @@ export default function Home() {
       </main>
 
       <Footer />
+      <ChatWidget />
     </div>
   );
 }
