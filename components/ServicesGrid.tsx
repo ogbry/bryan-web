@@ -16,14 +16,14 @@ const skills = [
       "TailwindCSS",
       "MaterialUI",
       "Recoil",
-      "Context API",
+      "Context API", "Expo"
     ],
   },
   {
     category: "Backend Development",
     icon: "🔧",
     color: "from-green-500 to-emerald-500",
-    items: ["Node.js", "FastAPI", "Express", "Python", "RESTful APIs"],
+    items: ["Node.js", "FastAPI", "Express", "RESTful APIs", "NestJS"],
   },
   {
     category: "Databases",
@@ -35,13 +35,13 @@ const skills = [
     category: "Cloud & AI",
     icon: "☁️",
     color: "from-orange-500 to-red-500",
-    items: ["AWS", "Deepgram", "GPT API", "ChatGPT", "Claude"],
+    items: ["AWS", "Deepgram", "GPT API", "ChatGPT", "Claude", "Google Cloud Platform", "Firebase"],
   },
   {
     category: "Dev Tools",
     icon: "🛠️",
     color: "from-indigo-500 to-purple-500",
-    items: ["Git", "Docker", "Webpack", "Cypress", "VS Code", "CI/CD"],
+    items: ["Git", "Docker", "Webpack", "Cypress", "VS Code", "Antigravity", "CI/CD"],
   },
   {
     category: "Languages",

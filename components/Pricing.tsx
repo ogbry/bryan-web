@@ -71,7 +71,7 @@ export default function Pricing() {
             Experience
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mb-12">
-            5+ years of professional software development experience
+            6+ years of professional software development experience
           </p>
 
           <div className="space-y-8">

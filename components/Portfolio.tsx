@@ -28,7 +28,7 @@ const projects = [
     description: "Working on something exciting...",
     images: [],
     tech: [],
-    year: "2025",
+    year: "2026",
     inProgress: true, // This will show skeleton loader
   },
   {

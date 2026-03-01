@@ -95,7 +95,7 @@ export default function Hero() {
               <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-r from-orange-600 to-yellow-600 dark:from-orange-400 dark:to-yellow-400">
                 AWS
               </span>
-              . 5+ years building scalable web applications and production-ready
+              . 6+ years building scalable web applications and production-ready
               solutions.
             </motion.p>
 

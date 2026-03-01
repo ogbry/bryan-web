@@ -4,7 +4,7 @@ import "../app/globals.css";
 export const metadata: Metadata = {
   title: "Bryan Alfuente | Software Engineer | React, Node.js, AWS",
   description:
-    "Bryan Alfuente - Software Engineer specializing in React, Node.js, TypeScript, and AWS. 5+ years experience in full-stack development and AI solutions. AWS Certified Cloud & AI Practitioner.",
+    "Bryan Alfuente - Software Engineer specializing in React, Node.js, TypeScript, and AWS. 6+ years experience in full-stack development and AI solutions. AWS Certified Cloud & AI Practitioner.",
   keywords: [
     "Bryan Alfuente",
     "Software Engineer",

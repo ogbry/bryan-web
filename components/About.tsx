@@ -84,11 +84,11 @@ export default function About() {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-6 mt-8">
                 {[
-                  { number: "5+", label: "Years Experience" },
+                  { number: "6+", label: "Years Experience" },
                   { number: "2", label: "AWS Certifications" },
                   {
                     number: "10+",
-                    label: "Web Applications Built (Solo & Team)",
+                    label: "Web Applications Built (Solo & Collaborated)",
                   },
                 ].map((stat, i) => (
                   <motion.div
