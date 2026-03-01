@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  nextjs:
+    build: .
+    container_name: portfolio_nextjs
+    restart: always
+    env_file:
+      - .env.production
+    ports:
+      - "3000:3000"
