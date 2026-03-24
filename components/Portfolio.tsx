@@ -72,7 +72,7 @@ const projects = [
       "Google Cloud Run",
       "Docker",
     ],
-    year: "2025",
+    year: "2026",
     website: "https://basuraos.web.app/",
     type: "Collaborated",
   },
