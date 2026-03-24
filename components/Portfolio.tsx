@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import ImageCarousel from "./ImageCarousel";
 import frontendcourseimg1 from "../assets/frontendcourseimg1.png";
 import frontendcourseimg2 from "../assets/frontendcourseimg2.png";
@@ -21,6 +22,17 @@ import abaiss_img2 from "../assets/abaiss_img2.png";
 import abaiss_img3 from "../assets/abaiss_img3.png";
 import mayon_img1 from "../assets/mayon_img1.png";
 import mayon_img2 from "../assets/mayon_img2.png";
+import ligtas_img1 from "../assets/ligtas_img1.jpg"
+import ligtas_img2 from "../assets/ligtas_img2.jpg"
+import ligtas_img3 from "../assets/ligtas_img3.jpg"
+import ligtas_img4 from "../assets/ligtas_img4.jpg"
+import ligtas_img5 from "../assets/ligtas_img5.jpg"
+import ligtas_img6 from "../assets/ligtas_img6.png"
+import dxdocs_img1 from "../assets/dxdocs_img1.png"
+import dxdocs_img2 from "../assets/dxdocs_img2.png"
+import dxdocs_img3 from "../assets/dxdocs_img3.png"
+import dxdocs_img4 from "../assets/dxdocs_img4.png"
+import dxdocs_img5 from "../assets/dxdocs_img5.png"
 
 const projects = [
   {
@@ -34,7 +46,7 @@ const projects = [
   {
     title: "Ligtas Mayon",
     description:
-      "Ligtas Mayon is a web-based safety monitoring tool for communities living near Mayon Volcano in Albay, Philippines. It provides real-time distance calculations to the 6km Permanent Danger Zone, evacuation center routing via Google Maps, and safety guidelines—all available in English, Filipino, and Bikol.",
+      "Ligtas Mayon is a safety monitoring tool for communities living near Mayon Volcano in Albay, Philippines. It provides real-time distance calculations to the 6km Permanent Danger Zone, evacuation center routing via Google Maps, and safety guidelines—all available in English, Filipino, and Bikol.",
     images: [mayon_img1, mayon_img2],
     tech: [
       "React",
@@ -49,6 +61,64 @@ const projects = [
     website: "https://mayon-geo.vercel.app/",
     github: "https://github.com/ogbry/mayon-geo-pdz",
     type: "Personal",
+    platforms: [
+      {
+        name: "Web",
+        images: [mayon_img1, mayon_img2],
+        tech: [
+          "React",
+          "Typescript",
+          "TailwindCSS",
+          "Geolocation API",
+          "OpenStreetMap",
+          "Framer Motion",
+          "Vercel",
+        ],
+        website: "https://mayon-geo.vercel.app/",
+        github: "https://github.com/ogbry/mayon-geo-pdz",
+      },
+      {
+        name: "Android",
+        images: [ligtas_img6, ligtas_img1, ligtas_img2, ligtas_img3, ligtas_img4, ligtas_img5],
+        tech: [
+          "React Native",
+          "Expo",
+          "TypeScript",
+          "React Navigation",
+          "Expo Location",
+          "React Native Maps",
+          "Async Storage",
+        ],
+        year: "2026",
+        website: "https://play.google.com/store/apps/details?id=com.ligtas.mayon", 
+        github: "https://github.com/ogbry/mayon-geo-pdz",
+      },
+    ],
+  },
+  {
+    title: "DX Docs",
+    description:
+      "A full-stack collaborative documentation platform for dev studio workspaces. Features real-time multi-user editing with live cursors, nested pages with drag-and-drop reordering, a rich TipTap editor with slash commands, version history, workspace management with role-based access, and full dark mode support.",
+    images: [dxdocs_img1, dxdocs_img2, dxdocs_img3, dxdocs_img4, dxdocs_img5],
+    tech: [
+      "Next.js 14",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn/UI",
+      "TipTap",
+      "Yjs",
+      "NestJS",
+      "Hocuspocus",
+      "PostgreSQL",
+      "Prisma",
+      "Redis",
+      "Docker",
+      "NextAuth.js",
+    ],
+    year: "2026",
+    github: "https://github.com/ogbry/dxdocs",
+    type: "Personal",
+    status: "In Progress",
   },
   {
     title: "ABAISS Platform (Demo for Client)",
@@ -135,6 +205,17 @@ const projects = [
 ];
 
 export default function Portfolio() {
+  const [selectedPlatforms, setSelectedPlatforms] = useState<{
+    [key: number]: number;
+  }>({});
+
+  const togglePlatform = (projectIndex: number, platformIndex: number) => {
+    setSelectedPlatforms((prev) => ({
+      ...prev,
+      [projectIndex]: platformIndex,
+    }));
+  };
+
   return (
     <section
       id="projects"
@@ -158,7 +239,26 @@ export default function Portfolio() {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {projects.map((project, i) => (
+          {projects.map((project, i) => {
+            const activePlatformIndex = selectedPlatforms[i] || 0;
+            const activePlatform = project.platforms
+              ? project.platforms[activePlatformIndex]
+              : null;
+            const displayImages = activePlatform
+              ? activePlatform.images
+              : project.images;
+            const displayTech = activePlatform
+              ? activePlatform.tech
+              : project.tech;
+            const displayWebsite = activePlatform
+              ? activePlatform.website
+              : project.website;
+            const displayGithub = activePlatform
+              ? activePlatform.github
+              : project.github;
+            const displayYear = activePlatform?.year ?? project.year;
+
+            return (
             <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 30 }}
@@ -221,19 +321,69 @@ export default function Portfolio() {
                 <>
                   {/* Image Carousel */}
                   <div className="relative">
-                    <ImageCarousel
-                      images={project.images}
-                      alt={project.title}
-                      // gradient={project.gradient}
-                      height="h-56"
-                    />
+                    {displayImages.length > 0 ? (
+                      <ImageCarousel
+                        images={displayImages}
+                        alt={project.title}
+                        height="h-56"
+                      />
+                    ) : (
+                      <div className="h-56 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
+                        <p className="text-slate-400 dark:text-slate-500 text-sm">
+                          Screenshots coming soon
+                        </p>
+                      </div>
+                    )}
                     <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-full text-xs font-semibold">
-                      {project.year}
+                      {displayYear}
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="p-6">
+                    {/* Platform Switcher */}
+                    {project.platforms && project.platforms.length > 1 && (
+                      <div className="mb-4 flex gap-2">
+                        {project.platforms.map((platform, platformIndex) => (
+                          <button
+                            key={platform.name}
+                            onClick={() => togglePlatform(i, platformIndex)}
+                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                              activePlatformIndex === platformIndex
+                                ? "bg-blue-600 text-white shadow-md"
+                                : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
+                            }`}
+                          >
+                            {platform.name === "Android" && (
+                              <svg
+                                className="w-4 h-4 inline-block mr-1.5"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.5 11.5 0 0 0-8.94 0L5.65 5.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C2.92 10.84 1 13.97 1 17.5h22c0-3.53-1.92-6.66-5.4-8.02zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z" />
+                              </svg>
+                            )}
+                            {platform.name === "Web" && (
+                              <svg
+                                className="w-4 h-4 inline-block mr-1.5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                                />
+                              </svg>
+                            )}
+                            {platform.name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
                     <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 dark:group-hover:from-blue-400 dark:group-hover:to-indigo-400 transition-all">
                       {project.title}
                     </h3>
@@ -243,11 +393,29 @@ export default function Portfolio() {
 
                     {/* Website Link & Project Type */}
                     <div className="mb-6 flex flex-wrap items-center gap-3">
-                      {project.website && (
+                      {displayWebsite && (
                         <>
-                          {project.website.startsWith("http") ? (
+                          {displayWebsite.startsWith("http") ? (
+                            activePlatform?.name === "Android" ? (
+                              <span className="inline-flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400 cursor-default select-none">
+                                <svg
+                                  className="w-4 h-4 shrink-0"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
+                                Play Store — Under Review
+                              </span>
+                            ) : (
                             <a
-                              href={project.website}
+                              href={displayWebsite}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
@@ -267,6 +435,7 @@ export default function Portfolio() {
                               </svg>
                               Visit Website
                             </a>
+                            )
                           ) : (
                             <span className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                               <svg
@@ -282,16 +451,16 @@ export default function Portfolio() {
                                   d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                                 />
                               </svg>
-                              {project.website}
+                              {displayWebsite}
                             </span>
                           )}
                         </>
                       )}
 
                       {/* GitHub Link */}
-                      {project.github && (
+                      {displayGithub && (
                         <a
-                          href={project.github}
+                          href={displayGithub}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
@@ -365,7 +534,7 @@ export default function Portfolio() {
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech) => (
+                      {displayTech.map((tech) => (
                         <span
                           key={tech}
                           className="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium rounded-lg border border-slate-200 dark:border-slate-600"
@@ -381,7 +550,8 @@ export default function Portfolio() {
                 </>
               )}
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
