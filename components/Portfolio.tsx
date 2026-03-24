@@ -33,6 +33,13 @@ import dxdocs_img2 from "../assets/dxdocs_img2.png"
 import dxdocs_img3 from "../assets/dxdocs_img3.png"
 import dxdocs_img4 from "../assets/dxdocs_img4.png"
 import dxdocs_img5 from "../assets/dxdocs_img5.png"
+import waste_img1 from '../assets/waste_img1.png'
+import waste_img2 from '../assets/waste_img2.png'
+import waste_img3 from '../assets/waste_img3.png'
+import waste_img4 from '../assets/waste_img4.png'
+import waste_img5 from '../assets/waste_img5.png'
+import waste_img6 from '../assets/waste_img6.png'
+import waste_img7 from '../assets/waste_img7.png'
 
 const projects = [
   {
@@ -42,6 +49,32 @@ const projects = [
     tech: [],
     year: "2026",
     inProgress: true, // This will show skeleton loader
+  },
+  {
+    title: "WasteOS",
+    description:
+      "A full-stack waste management platform for owner-operators running 5–10 truck fleets. Features a dispatcher console with live GPS container tracking, drag-and-drop dispatch board, automated invoicing with QuickBooks Desktop sync, an offline-capable driver mobile app, and multi-tenant PostgreSQL with PostGIS for location-based data.",
+    images: [waste_img1, waste_img2, waste_img3, waste_img4, waste_img5, waste_img6, waste_img7],
+    tech: [
+      "React",
+      "Vite",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn/UI",
+      "Mapbox GL",
+      "FastAPI",
+      "Python",
+      "PostgreSQL",
+      "PostGIS",
+      "Redis",
+      "Firebase",
+      "Capacitor",
+      "Google Cloud Run",
+      "Docker",
+    ],
+    year: "2025",
+    website: "https://basuraos.web.app/",
+    type: "Collaborated",
   },
   {
     title: "Ligtas Mayon",
@@ -56,6 +89,7 @@ const projects = [
       "OpenStreetMap",
       "Framer Motion",
       "Vercel",
+      "Docker"
     ],
     year: "2025",
     website: "https://mayon-geo.vercel.app/",
@@ -73,6 +107,7 @@ const projects = [
           "OpenStreetMap",
           "Framer Motion",
           "Vercel",
+          "Docker",
         ],
         website: "https://mayon-geo.vercel.app/",
         github: "https://github.com/ogbry/mayon-geo-pdz",
@@ -118,10 +153,11 @@ const projects = [
     year: "2026",
     github: "https://github.com/ogbry/dxdocs",
     type: "Personal",
-    status: "In Progress",
+    website: "https://docs.dxlabs.dev/"
   },
+  
   {
-    title: "ABAISS Platform (Demo for Client)",
+    title: "ABAISS Platform (Demo)",
     description:
       "A comprehensive behavioral health management platform that automates client intake, authorization tracking, staff assignment, and quality assurance processes. Built with React and integrates Monday.com CRM with NAOMI, Rethink, and MCO systems to eliminate manual data entry and ensure compliance with authorization timelines.",
     images: [abaiss_img1, abaiss_img2, abaiss_img3],
@@ -132,7 +168,7 @@ const projects = [
     website: "https://aba-iss-portal.vercel.app/admin/dashboard",
   },
   {
-    title: "HRIS Portal (Demo for Client)",
+    title: "HRIS Portal (Demo)",
     description:
       "A Human Resources Information System Portal for employee management, featuring recruitment tracking, turnover analytics, compliance monitoring, and organizational oversight.",
     images: [hris_img1, hris_img2, hris_img3],
