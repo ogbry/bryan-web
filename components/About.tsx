@@ -60,7 +60,7 @@ export default function About() {
                   <span className="font-semibold text-slate-900 dark:text-white">
                     Software Engineer
                   </span>{" "}
-                  with over 5 years of experience building robust web
+                  with over 6 years of experience building robust web
                   applications and working closely with teams on solutions that
                   leverage AI technologies.
                 </p>
