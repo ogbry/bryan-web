@@ -40,6 +40,10 @@ import waste_img4 from '../assets/waste_img4.png'
 import waste_img5 from '../assets/waste_img5.png'
 import waste_img6 from '../assets/waste_img6.png'
 import waste_img7 from '../assets/waste_img7.png'
+import webleads_img1 from '../assets/webleads_img1.jpg'
+import webleads_img2 from '../assets/webleads_img2.jpg'
+import webleads_img3 from '../assets/webleads_img3.jpg'
+import webleads_img4 from '../assets/webleads_img4.jpg'
 
 const projects = [
   {
@@ -76,6 +80,56 @@ const projects = [
     website: "https://basuraos.web.app/",
     type: "Collaborated",
   },
+  {
+    title: "WebLeads",
+    description:
+      "A lead generation and enrichment platform that lets users search for businesses by category and location using the Google Places API, enrich lead data with contact details and ratings, find business emails via Gemini AI, and run email campaigns through Resend—all with job tracking and lead status management.",
+    images: [webleads_img4, webleads_img2, webleads_img1, webleads_img3],
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "TailwindCSS",
+      "MongoDB",
+      "Mongoose",
+      "Google Places API",
+      "Gemini AI",
+      "Resend",
+      "JWT",
+      "Docker",
+    ],
+    year: "2026",
+    website: "https://webleads.dxlabs.dev/",
+    github: "https://github.com/ogbry/webleads",
+    type: "Personal",
+  },
+  
+  {
+    title: "DX Docs",
+    description:
+      "A full-stack collaborative documentation platform for dev studio workspaces. Features real-time multi-user editing with live cursors, nested pages with drag-and-drop reordering, a rich TipTap editor with slash commands, version history, workspace management with role-based access, and full dark mode support.",
+    images: [dxdocs_img1, dxdocs_img2, dxdocs_img3, dxdocs_img4, dxdocs_img5],
+    tech: [
+      "Next.js 14",
+      "TypeScript",
+      "TailwindCSS",
+      "Shadcn/UI",
+      "TipTap",
+      "Yjs",
+      "NestJS",
+      "Hocuspocus",
+      "PostgreSQL",
+      "Prisma",
+      "Redis",
+      "Docker",
+      "NextAuth.js",
+    ],
+    year: "2026",
+    github: "https://github.com/ogbry/dxdocs",
+    type: "Personal",
+    website: "https://docs.dxlabs.dev/"
+  },
+  
   {
     title: "Ligtas Mayon",
     description:
@@ -130,32 +184,6 @@ const projects = [
       },
     ],
   },
-  {
-    title: "DX Docs",
-    description:
-      "A full-stack collaborative documentation platform for dev studio workspaces. Features real-time multi-user editing with live cursors, nested pages with drag-and-drop reordering, a rich TipTap editor with slash commands, version history, workspace management with role-based access, and full dark mode support.",
-    images: [dxdocs_img1, dxdocs_img2, dxdocs_img3, dxdocs_img4, dxdocs_img5],
-    tech: [
-      "Next.js 14",
-      "TypeScript",
-      "TailwindCSS",
-      "Shadcn/UI",
-      "TipTap",
-      "Yjs",
-      "NestJS",
-      "Hocuspocus",
-      "PostgreSQL",
-      "Prisma",
-      "Redis",
-      "Docker",
-      "NextAuth.js",
-    ],
-    year: "2026",
-    github: "https://github.com/ogbry/dxdocs",
-    type: "Personal",
-    website: "https://docs.dxlabs.dev/"
-  },
-  
   {
     title: "ABAISS Platform (Demo)",
     description:
