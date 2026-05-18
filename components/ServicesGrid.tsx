@@ -29,7 +29,7 @@ const skills = [
     category: "Databases",
     icon: "🗄️",
     color: "from-purple-500 to-pink-500",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "SQL"],
+    items: ["PostgreSQL", "MongoDB", "MySQL", "SQL", "Supabase"],
   },
   {
     category: "Cloud & AI",

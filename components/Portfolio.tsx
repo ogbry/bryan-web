@@ -55,6 +55,61 @@ const projects = [
     inProgress: true, // This will show skeleton loader
   },
   {
+    title: "Ligtas Mayon",
+    description:
+      "Ligtas Mayon is a safety monitoring tool for communities living near Mayon Volcano in Albay, Philippines. It provides real-time distance calculations to the 6km Permanent Danger Zone, evacuation center routing via Google Maps, and safety guidelines—all available in English, Filipino, and Bikol.",
+    images: [mayon_img1, mayon_img2],
+    tech: [
+      "React",
+      "Typescript",
+      "TailwindCSS",
+      "Geolocation API",
+      "OpenStreetMap",
+      "Framer Motion",
+      "Vercel",
+      "Docker"
+    ],
+    year: "2025",
+    website: "https://mayon-geo.vercel.app/",
+    github: "https://github.com/ogbry/mayon-geo-pdz",
+    type: "Personal",
+    platforms: [
+      {
+        name: "Android",
+        images: [ligtas_img6, ligtas_img1, ligtas_img2, ligtas_img3, ligtas_img4, ligtas_img5],
+        tech: [
+          "React Native",
+          "Expo",
+          "TypeScript",
+          "React Navigation",
+          "Expo Location",
+          "React Native Maps",
+          "Async Storage",
+        ],
+        year: "2026",
+        website: "https://play.google.com/store/apps/details?id=com.ligtasmayon.app", 
+        github: "https://github.com/ogbry/mayon-geo-pdz/mobile",
+      },
+      {
+        name: "Web",
+        images: [mayon_img1, mayon_img2],
+        tech: [
+          "React",
+          "Typescript",
+          "TailwindCSS",
+          "Geolocation API",
+          "OpenStreetMap",
+          "Framer Motion",
+          "Vercel",
+          "Docker",
+        ],
+        website: "https://mayon-geo.vercel.app/",
+        github: "https://github.com/ogbry/mayon-geo-pdz",
+      },
+      
+    ],
+  },
+  {
     title: "WasteOS",
     description:
       "A full-stack waste management platform for owner-operators running 5–10 truck fleets. Features a dispatcher console with live GPS container tracking, drag-and-drop dispatch board, automated invoicing with QuickBooks Desktop sync, an offline-capable driver mobile app, and multi-tenant PostgreSQL with PostGIS for location-based data.",
@@ -128,61 +183,6 @@ const projects = [
     github: "https://github.com/ogbry/dxdocs",
     type: "Personal",
     website: "https://docs.dxlabs.dev/"
-  },
-  
-  {
-    title: "Ligtas Mayon",
-    description:
-      "Ligtas Mayon is a safety monitoring tool for communities living near Mayon Volcano in Albay, Philippines. It provides real-time distance calculations to the 6km Permanent Danger Zone, evacuation center routing via Google Maps, and safety guidelines—all available in English, Filipino, and Bikol.",
-    images: [mayon_img1, mayon_img2],
-    tech: [
-      "React",
-      "Typescript",
-      "TailwindCSS",
-      "Geolocation API",
-      "OpenStreetMap",
-      "Framer Motion",
-      "Vercel",
-      "Docker"
-    ],
-    year: "2025",
-    website: "https://mayon-geo.vercel.app/",
-    github: "https://github.com/ogbry/mayon-geo-pdz",
-    type: "Personal",
-    platforms: [
-      {
-        name: "Web",
-        images: [mayon_img1, mayon_img2],
-        tech: [
-          "React",
-          "Typescript",
-          "TailwindCSS",
-          "Geolocation API",
-          "OpenStreetMap",
-          "Framer Motion",
-          "Vercel",
-          "Docker",
-        ],
-        website: "https://mayon-geo.vercel.app/",
-        github: "https://github.com/ogbry/mayon-geo-pdz",
-      },
-      {
-        name: "Android",
-        images: [ligtas_img6, ligtas_img1, ligtas_img2, ligtas_img3, ligtas_img4, ligtas_img5],
-        tech: [
-          "React Native",
-          "Expo",
-          "TypeScript",
-          "React Navigation",
-          "Expo Location",
-          "React Native Maps",
-          "Async Storage",
-        ],
-        year: "2026",
-        website: "https://play.google.com/store/apps/details?id=com.ligtas.mayon", 
-        github: "https://github.com/ogbry/mayon-geo-pdz",
-      },
-    ],
   },
   {
     title: "ABAISS Platform (Demo)",
@@ -460,24 +460,6 @@ export default function Portfolio() {
                       {displayWebsite && (
                         <>
                           {displayWebsite.startsWith("http") ? (
-                            activePlatform?.name === "Android" ? (
-                              <span className="inline-flex items-center gap-2 text-sm text-amber-600 dark:text-amber-400 cursor-default select-none">
-                                <svg
-                                  className="w-4 h-4 shrink-0"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  viewBox="0 0 24 24"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                  />
-                                </svg>
-                                Play Store — Under Review
-                              </span>
-                            ) : (
                             <a
                               href={displayWebsite}
                               target="_blank"
@@ -497,9 +479,8 @@ export default function Portfolio() {
                                   d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                                 />
                               </svg>
-                              Visit Website
+                              {activePlatform?.name === "Android" ? "Download on Play Store" : "Visit Website"}
                             </a>
-                            )
                           ) : (
                             <span className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                               <svg
