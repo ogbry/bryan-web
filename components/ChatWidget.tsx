@@ -203,7 +203,7 @@ export default function ChatWidget() {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-full shadow-2xl flex items-center justify-center text-white"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-full shadow-[0_8px_24px_-8px_rgba(37,99,235,0.7)] flex items-center justify-center text-white"
             aria-label="Open chat"
           >
             {hasUnread && (
@@ -247,13 +247,13 @@ export default function ChatWidget() {
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className={
               isMobile
-                ? "fixed bottom-0 left-0 right-0 z-50 flex flex-col bg-white dark:bg-slate-900 rounded-t-3xl shadow-2xl overflow-hidden"
-                : "fixed bottom-6 right-6 z-50 flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-700/80 overflow-hidden w-[360px]"
+                ? "fixed bottom-0 left-0 right-0 z-50 flex flex-col bg-white dark:bg-[#0a0d16] rounded-t-3xl shadow-2xl overflow-hidden border-t border-white/10"
+                : "fixed bottom-6 right-6 z-50 flex flex-col bg-white dark:bg-[#0a0d16] rounded-2xl shadow-2xl border border-slate-200/80 dark:border-white/10 overflow-hidden w-[360px]"
             }
             style={isMobile ? { height: "85svh" } : { height: "520px" }}
           >
             {/* Header */}
-            <div className="relative flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 flex-shrink-0">
+            <div className="relative flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-700 to-blue-500 flex-shrink-0">
               {/* Mobile drag handle */}
               {isMobile && (
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-10 h-1 bg-white/30 rounded-full" />
@@ -288,7 +288,7 @@ export default function ChatWidget() {
                   <img
                     src="/image.jpeg"
                     alt="Bryan"
-                    className="w-20 h-20 rounded-full object-cover border-4 border-blue-100 dark:border-slate-700 shadow-lg"
+                    className="w-20 h-20 rounded-full object-cover border-4 border-blue-100 dark:border-white/10 shadow-[0_0_20px_-6px_rgba(37,99,235,0.5)]"
                   />
                   <span className="absolute bottom-1 right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white dark:border-slate-900" />
                 </div>
@@ -307,7 +307,7 @@ export default function ChatWidget() {
                       value={visitorName}
                       onChange={(e) => setVisitorName(e.target.value)}
                       placeholder="What's your name?"
-                      className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-all"
+                      className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent text-sm transition-all"
                       autoFocus
                     />
                   </div>
@@ -316,7 +316,7 @@ export default function ChatWidget() {
                     disabled={!visitorName.trim()}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl text-sm shadow-lg shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none transition-all"
+                    className="w-full py-3 bg-gradient-to-r from-blue-700 to-blue-500 text-white font-semibold rounded-xl text-sm shadow-lg shadow-blue-500/25 hover:shadow-[0_8px_26px_-8px_rgba(37,99,235,0.6)] disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none transition-all"
                   >
                     Start Chatting →
                   </motion.button>
@@ -333,7 +333,7 @@ export default function ChatWidget() {
                 </div>
 
                 {/* Input bar */}
-                <div className="flex-shrink-0 px-3 py-3 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
+                <div className="flex-shrink-0 px-3 py-3 border-t border-slate-100 dark:border-white/10 bg-white dark:bg-[#0a0d16]">
                   <form onSubmit={handleSend} className="flex items-center gap-2">
                     <input
                       ref={inputRef}
@@ -342,14 +342,14 @@ export default function ChatWidget() {
                       onChange={(e) => setInputValue(e.target.value)}
                       placeholder={status === "connected" ? "Type a message..." : "Connecting..."}
                       disabled={status !== "connected"}
-                      className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 transition-all"
+                      className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/10 rounded-full text-slate-900 dark:text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent disabled:opacity-50 transition-all"
                     />
                     <motion.button
                       type="submit"
                       disabled={!inputValue.trim() || status !== "connected"}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.92 }}
-                      className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-full flex items-center justify-center shadow-md shadow-blue-500/30 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none transition-all"
+                      className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-blue-600 to-cyan-500 text-white rounded-full flex items-center justify-center shadow-md shadow-blue-500/30 disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none transition-all"
                       aria-label="Send"
                     >
                       <svg className="w-4 h-4 translate-x-px" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -6,7 +6,7 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import ServicesGrid from "../components/ServicesGrid";
 import Portfolio from "../components/Portfolio";
-import Pricing from "../components/Pricing";
+import Experience from "../components/Experience";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import ChatWidget from "../components/ChatWidget";
@@ -38,7 +38,7 @@ export default function Home() {
 
   if (!mounted) {
     return (
-      <div className="min-h-screen bg-slate-900 text-slate-100">
+      <div className="min-h-screen bg-[#05070f] text-slate-100">
         <div className="flex items-center justify-center min-h-screen">
           Loading...
         </div>
@@ -51,7 +51,7 @@ export default function Home() {
       className={`min-h-screen flex flex-col transition-colors duration-300 ${
         theme === "light"
           ? "bg-white text-slate-900"
-          : "bg-slate-900 text-slate-100"
+          : "bg-[#05070f] text-slate-100"
       }`}
     >
       <Header theme={theme} toggleTheme={toggleTheme} />
@@ -61,7 +61,7 @@ export default function Home() {
         <About />
         <Portfolio />
         <ServicesGrid />
-        <Pricing />
+        <Experience />
         <Contact />
       </main>
 

@@ -63,8 +63,10 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-900/50"
+      className="relative py-24 bg-white dark:bg-[#05070f] overflow-hidden"
     >
+      {/* ambient glow */}
+      <div className="absolute bottom-10 left-1/4 w-80 h-80 rounded-full blur-[150px] bg-blue-400/8 dark:bg-blue-600/10 pointer-events-none" />
       {submitStatus === "success" && (
         <motion.div
           initial={{ opacity: 0, y: -50, x: "-50%" }}
@@ -127,7 +129,7 @@ export default function Contact() {
         </motion.div>
       )}
 
-      <div className="container max-w-5xl px-6">
+      <div className="container max-w-5xl px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -135,8 +137,11 @@ export default function Contact() {
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-            Let's Work Together
+          <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-cyan-600 dark:text-cyan-400 mb-4">
+            Get In Touch
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white tracking-tight">
+            Let&apos;s Work <span className="text-neon-gradient">Together</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             Have a project in mind or just want to connect? Fill out the form
@@ -152,9 +157,9 @@ export default function Contact() {
             transition={{ duration: 0.5 }}
             className="space-y-6"
           >
-<div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:shadow-lg transition-shadow">
+<div className="gradient-border glass rounded-2xl p-6 hover:shadow-2xl transition-all">
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-[0_0_16px_-5px_rgba(37,99,235,0.6)]">
                   <svg
                     className="w-6 h-6 text-white"
                     fill="none"
@@ -188,7 +193,7 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 hover:shadow-lg transition-shadow">
+            <div className="gradient-border glass rounded-2xl p-6 hover:shadow-2xl transition-all">
               <div className="text-sm text-slate-500 dark:text-slate-400 mb-4">
                 Connect with me
               </div>
@@ -243,7 +248,7 @@ export default function Contact() {
           >
             <form
               onSubmit={handleSubmit}
-              className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 shadow-xl"
+              className="gradient-border glass rounded-2xl p-8 shadow-xl"
             >
               <div className="space-y-6">
                 <div>
@@ -260,7 +265,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
                     placeholder="John Doe"
                   />
                 </div>
@@ -279,7 +284,7 @@ export default function Contact() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -298,7 +303,7 @@ export default function Contact() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
                     placeholder="Project Inquiry"
                   />
                 </div>
@@ -317,7 +322,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent transition-all resize-none"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all resize-none"
                     placeholder="Tell me about your project or idea..."
                   />
                 </div>
@@ -327,7 +332,7 @@ export default function Contact() {
                   disabled={isSubmitting}
                   whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                   whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className={`w-full px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 ${
+                  className={`w-full px-8 py-4 bg-gradient-to-r from-blue-700 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-[0_8px_26px_-8px_rgba(37,99,235,0.6)] transition-all flex items-center justify-center gap-2 ${
                     isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 >

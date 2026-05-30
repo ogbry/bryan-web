@@ -283,9 +283,11 @@ export default function Portfolio() {
   return (
     <section
       id="projects"
-      className="py-20 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800"
+      className="relative py-24 bg-white dark:bg-[#05070f] overflow-hidden"
     >
-      <div className="container px-6">
+      {/* ambient glow */}
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] rounded-full blur-[160px] bg-blue-400/8 dark:bg-blue-600/10 pointer-events-none" />
+      <div className="container px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -293,8 +295,11 @@ export default function Portfolio() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-            Featured Projects
+          <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-cyan-600 dark:text-cyan-400 mb-4">
+            Selected Work
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white tracking-tight">
+            Featured <span className="text-neon-gradient">Projects</span>
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
             A showcase of my recent work in full-stack development, AI-assisted
@@ -330,7 +335,7 @@ export default function Portfolio() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               whileHover={{ y: -8 }}
-              className="group relative bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="gradient-border group relative glass rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               {project.inProgress ? (
                 /* Skeleton Loader for In-Progress Projects */
@@ -357,7 +362,7 @@ export default function Portfolio() {
                         </p>
                       </div>
                     </div>
-                    <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-full text-xs font-semibold">
+                    <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/80 dark:bg-white/10 backdrop-blur-md border border-slate-200/60 dark:border-white/15 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200">
                       {project.year}
                     </div>
                   </div>
@@ -398,7 +403,7 @@ export default function Portfolio() {
                         </p>
                       </div>
                     )}
-                    <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-full text-xs font-semibold">
+                    <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/80 dark:bg-white/10 backdrop-blur-md border border-slate-200/60 dark:border-white/15 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200">
                       {displayYear}
                     </div>
                   </div>
@@ -414,8 +419,8 @@ export default function Portfolio() {
                             onClick={() => togglePlatform(i, platformIndex)}
                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                               activePlatformIndex === platformIndex
-                                ? "bg-blue-600 text-white shadow-md"
-                                : "bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600"
+                                ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_0_14px_-5px_rgba(37,99,235,0.7)]"
+                                : "bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10"
                             }`}
                           >
                             {platform.name === "Android" && (
@@ -582,7 +587,7 @@ export default function Portfolio() {
                       {displayTech.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium rounded-lg border border-slate-200 dark:border-slate-600"
+                          className="px-3 py-1 bg-slate-100/80 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 text-xs font-medium rounded-lg border border-slate-200 dark:border-white/10 group-hover:border-cyan-400/40 dark:group-hover:border-cyan-400/30 transition-colors"
                         >
                           {tech}
                         </span>
@@ -591,7 +596,7 @@ export default function Portfolio() {
                   </div>
 
                   {/* Hover overlay */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-blue-500 dark:group-hover:border-blue-400 rounded-2xl transition-all duration-300 pointer-events-none"></div>
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/40 rounded-2xl transition-all duration-300 pointer-events-none"></div>
                 </>
               )}
             </motion.div>

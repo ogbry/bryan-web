@@ -4,8 +4,14 @@ import { motion } from "framer-motion";
 
 export default function About() {
   return (
-    <section id="about" className="py-20 bg-white dark:bg-slate-900">
-      <div className="container px-6">
+    <section
+      id="about"
+      className="relative py-24 bg-white dark:bg-[#05070f] overflow-hidden"
+    >
+      {/* ambient glow */}
+      <div className="absolute top-1/3 -left-20 w-72 h-72 rounded-full blur-[130px] bg-blue-400/8 dark:bg-blue-600/10 pointer-events-none" />
+
+      <div className="container px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -23,17 +29,17 @@ export default function About() {
                 transition={{ delay: 0.2, duration: 0.6 }}
                 className="relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl transform rotate-6"></div>
-                <div className="relative bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 rounded-2xl p-8 flex items-center justify-center h-96">
+                <div className="absolute -inset-3 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-3xl blur-2xl opacity-15 dark:opacity-25"></div>
+                <div className="gradient-border relative glass rounded-3xl p-8 flex items-center justify-center h-96">
                   <div className="text-center">
-                    <div className="w-40 h-40 mx-auto mb-4 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-6xl">
+                    <div className="w-40 h-40 mx-auto mb-4 rounded-full p-[3px] bg-gradient-to-br from-blue-600 to-cyan-500 shadow-[0_0_24px_-6px_rgba(37,99,235,0.5)]">
                       <img
-                        className="rounded-full"
+                        className="rounded-full w-full h-full object-cover"
                         src="/image.jpeg"
                         alt="Bryan Alfuente"
                       />
                     </div>
-                    <div className="text-2xl font-bold text-slate-700 dark:text-slate-200">
+                    <div className="text-2xl font-bold text-slate-800 dark:text-white">
                       Bryan Alfuente
                     </div>
                     <div className="text-slate-600 dark:text-slate-400">
@@ -51,12 +57,15 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-                About Me
+              <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-cyan-600 dark:text-cyan-400 mb-4">
+                Who I Am
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white tracking-tight">
+                About <span className="text-neon-gradient">Me</span>
               </h2>
               <div className="space-y-4 text-slate-600 dark:text-slate-400 leading-relaxed">
                 <p className="text-lg">
-                  I'm a passionate{" "}
+                  I&apos;m a passionate{" "}
                   <span className="font-semibold text-slate-900 dark:text-white">
                     Software Engineer
                   </span>{" "}
@@ -73,7 +82,7 @@ export default function About() {
                   React, Node.js, TypeScript, and AWS cloud services.
                 </p>
                 <p>
-                  I've had the privilege of working on cutting-edge projects
+                  I&apos;ve had the privilege of working on cutting-edge projects
                   including an AI-powered call analysis platform using Deepgram,
                   Slack integrations, workflows and GPT API, and developing
                   enterprise-grade CRM systems like Vtiger and GoHighLevel that
@@ -99,7 +108,7 @@ export default function About() {
                     transition={{ delay: 0.4 + i * 0.1 }}
                     className="text-center"
                   >
-                    <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                    <div className="text-3xl font-bold text-neon-gradient">
                       {stat.number}
                     </div>
                     <div className="text-sm text-slate-600 dark:text-slate-400 mt-1">

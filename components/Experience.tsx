@@ -55,19 +55,28 @@ const certifications = [
   },
 ];
 
-export default function Pricing() {
+export default function Experience() {
   return (
-    <section id="experience" className="py-20 bg-slate-50 dark:bg-slate-900/50">
-      <div className="container">
+    <section
+      id="experience"
+      className="relative py-24 bg-slate-50 dark:bg-[#080b14] overflow-hidden"
+    >
+      {/* ambient glow */}
+      <div className="absolute top-1/4 -right-20 w-80 h-80 rounded-full blur-[140px] bg-blue-400/8 dark:bg-blue-600/10 pointer-events-none" />
+
+      <div className="container relative z-10">
         {/* Experience Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-16"
+          className="mb-20"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+          <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-cyan-600 dark:text-cyan-400 mb-3">
+            Where I&apos;ve Worked
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
             Experience
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mb-12">
@@ -82,14 +91,14 @@ export default function Pricing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6"
+                className="gradient-border glass rounded-2xl p-6 transition-all hover:shadow-2xl"
               >
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
                   <div>
                     <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
                       {exp.role}
                     </h3>
-                    <div className="text-slate-600 dark:text-slate-400 font-medium">
+                    <div className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400">
                       {exp.company}
                     </div>
                   </div>
@@ -116,9 +125,7 @@ export default function Pricing() {
                       key={idx}
                       className="flex items-start gap-3 text-slate-600 dark:text-slate-400"
                     >
-                      <span className="text-slate-400 dark:text-slate-600 mt-1.5">
-                        •
-                      </span>
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
                       <span>{achievement}</span>
                     </li>
                   ))}
@@ -135,7 +142,10 @@ export default function Pricing() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+          <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-cyan-600 dark:text-cyan-400 mb-3">
+            Credentials
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
             Certifications
           </h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mb-12">
@@ -150,7 +160,8 @@ export default function Pricing() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                whileHover={{ y: -4 }}
+                className="gradient-border glass rounded-2xl p-6 hover:shadow-2xl transition-all"
               >
                 <h3 className="font-semibold text-lg text-slate-900 dark:text-white mb-2">
                   {cert.name}
@@ -165,7 +176,7 @@ export default function Pricing() {
                   href={cert.badgeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-sm font-medium rounded-lg transition-all hover:scale-105"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white text-sm font-medium rounded-lg transition-all hover:scale-105 hover:shadow-[0_8px_22px_-8px_rgba(37,99,235,0.6)]"
                 >
                   <svg
                     className="w-4 h-4"

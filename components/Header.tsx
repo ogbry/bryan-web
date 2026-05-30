@@ -11,7 +11,7 @@ const navItems = [
   { name: "Skills", href: "#services" },
   { name: "Work", href: "#projects" },
   { name: "Experience", href: "#experience" },
-  { name: "Contact", href: "#contact" }
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Header({ theme, toggleTheme }: HeaderProps) {
@@ -20,16 +20,20 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className={`sticky top-0 z-50 border-b backdrop-blur-md ${
-        theme === "light"
-          ? "bg-white/80 border-slate-200"
-          : "bg-slate-900/80 border-slate-800"
-      }`}
+      className="sticky top-0 z-50 bg-white/70 dark:bg-[#05070f]/70 backdrop-blur-xl border-b border-slate-200/70 dark:border-white/[0.08]"
     >
+      {/* accent underline */}
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-500/35 to-transparent" />
+
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-semibold text-slate-900 dark:text-white">
-          Bryan Alfuente
+        <a href="#" className="group flex items-center gap-2.5">
+          <span className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-cyan-500 text-white font-bold text-sm shadow-[0_0_14px_-3px_rgba(59,130,246,0.5)]">
+            BA
+          </span>
+          <span className="font-semibold text-slate-900 dark:text-white tracking-tight">
+            Bryan Alfuente
+          </span>
         </a>
 
         {/* Navigation */}
@@ -38,9 +42,10 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
             <a
               key={item.name}
               href={item.href}
-              className="text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+              className="group relative text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               {item.name}
+              <span className="absolute -bottom-1.5 left-0 h-px w-0 bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -50,9 +55,13 @@ export default function Header({ theme, toggleTheme }: HeaderProps) {
           {/* Dark Mode Toggle Switch */}
           <button
             onClick={toggleTheme}
-            className="relative inline-flex items-center h-6 w-11 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+            className="relative inline-flex items-center h-6 w-11 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-[#05070f]"
             style={{
-              backgroundColor: theme === "dark" ? "#3b82f6" : "#cbd5e1",
+              backgroundColor: theme === "dark" ? "#2563eb" : "#cbd5e1",
+              boxShadow:
+                theme === "dark"
+                  ? "0 0 10px -3px rgba(37,99,235,0.7)"
+                  : "none",
             }}
             aria-label="Toggle theme"
           >
