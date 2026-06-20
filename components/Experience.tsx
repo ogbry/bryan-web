@@ -12,9 +12,9 @@ import boomsourcing_img1 from "../assets/boomsourcing_img1.jpg";
 
 const experiences = [
   {
-    company: "BOOM AI Solutions OPC / Spero",
+    company: "BOOM AI Solutions OPC",
     role: "Software Engineer",
-    period: "Aug 2022 - Dec 2024",
+    period: "Aug 2022 - Dec 2025",
     location: "Remote",
     achievements: [
       "Developed high-performance web applications using React.js and Node.js",
