@@ -44,6 +44,14 @@ import webleads_img1 from '../assets/webleads_img1.jpg'
 import webleads_img2 from '../assets/webleads_img2.jpg'
 import webleads_img3 from '../assets/webleads_img3.jpg'
 import webleads_img4 from '../assets/webleads_img4.jpg'
+import pms_img1 from '../assets/pms_img1.png'
+import pms_img2 from '../assets/pms_img2.png'
+import pms_img3 from '../assets/pms_img3.png'
+import pms_img4 from '../assets/pms_img4.png'
+import pms_img5 from '../assets/pms_img5.png'
+import pms_img6 from '../assets/pms_img6.png'
+import pms_img7 from '../assets/pms_img7.png'
+import pms_img8 from '../assets/pms_img8.png'
 
 const projects = [
   {
@@ -54,6 +62,27 @@ const projects = [
     year: "2026",
     inProgress: true, // This will show skeleton loader
   },
+  {
+  title: "PayrollOS",
+  description:
+    "PayrollOS is a multi-tenant SaaS payroll management system built for Philippine companies. It handles employee attendance tracking with a live floating time clock, automated payroll computation with SSS, PhilHealth, Pag-IBIG, and BIR TRAIN Law deductions, leave management, request workflows, and role-based access across Super Admin, Admin, Supervisor, and Employee tiers.",
+  images: [pms_img1, pms_img2, pms_img3, pms_img4, pms_img5, pms_img8, pms_img6, pms_img7],
+  tech: [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "TailwindCSS",
+    "Prisma",
+    "PostgreSQL",
+    "NextAuth.js",
+    "Vercel",
+  ],
+  year: "2026",
+  website: "https://payroll-os-red.vercel.app",
+  github: "https://github.com/ogbry/payroll-os",
+  type: "Freelance",
+},
+
   {
     title: "Ligtas Mayon",
     description:
