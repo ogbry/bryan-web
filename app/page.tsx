@@ -7,6 +7,7 @@ import About from "../components/About";
 import ServicesGrid from "../components/ServicesGrid";
 import Portfolio from "../components/Portfolio";
 import Experience from "../components/Experience";
+import GitHubActivity from "../components/GitHubActivity";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import ChatWidget from "../components/ChatWidget";
@@ -62,6 +63,7 @@ export default function Home() {
         <Portfolio />
         <ServicesGrid />
         <Experience />
+        <GitHubActivity />
         <Contact />
       </main>
 

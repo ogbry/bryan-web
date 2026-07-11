@@ -7,6 +7,7 @@ export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    whatsapp: "",
     subject: "",
     message: "",
   });
@@ -14,6 +15,7 @@ export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [contactError, setContactError] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,6 +28,14 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Require at least one way to reply: email or WhatsApp
+    if (!formData.email.trim() && !formData.whatsapp.trim()) {
+      setContactError(true);
+      return;
+    }
+    setContactError(false);
+
     setIsSubmitting(true);
     setSubmitStatus("idle");
 
@@ -43,7 +53,7 @@ export default function Contact() {
       }
 
       setSubmitStatus("success");
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      setFormData({ name: "", email: "", whatsapp: "", subject: "", message: "" });
 
       setTimeout(() => {
         setSubmitStatus("idle");
@@ -275,7 +285,7 @@ export default function Contact() {
                     htmlFor="email"
                     className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
                   >
-                    Your Email *
+                    Your Email
                   </label>
                   <input
                     type="email"
@@ -283,10 +293,38 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
                     className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
                     placeholder="john@example.com"
                   />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="whatsapp"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
+                  >
+                    WhatsApp Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="whatsapp"
+                    name="whatsapp"
+                    value={formData.whatsapp}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
+                    placeholder="+63 912 345 6789"
+                  />
+                  <p
+                    className={`mt-2 text-xs ${
+                      contactError
+                        ? "text-red-500 dark:text-red-400"
+                        : "text-slate-500 dark:text-slate-400"
+                    }`}
+                  >
+                    {contactError
+                      ? "Please provide your email or WhatsApp number so I can reply."
+                      : "Leave your email or WhatsApp (at least one) so I can get back to you."}
+                  </p>
                 </div>
 
                 <div>

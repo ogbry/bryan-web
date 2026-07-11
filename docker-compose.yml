@@ -6,7 +6,6 @@ services:
       context: .
       args:
         - NEXT_PUBLIC_BOT_URL=${NEXT_PUBLIC_BOT_URL}
-        - NEXT_PUBLIC_RESTDB_API_KEY=${NEXT_PUBLIC_RESTDB_API_KEY}
     container_name: portfolio_nextjs
     restart: always
     env_file:
