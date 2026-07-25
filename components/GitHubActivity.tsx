@@ -33,6 +33,25 @@ function levelColor(count: number): string {
   return "rgba(37,99,235,1)";
 }
 
+const MONTHS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+];
+
+function monthLabels(weeks: Day[][]): string[] {
+  let prevMonth = -1;
+  return weeks.map((week) => {
+    const firstDay = week[0];
+    if (!firstDay) return "";
+    const month = new Date(firstDay.date).getMonth();
+    if (month !== prevMonth) {
+      prevMonth = month;
+      return MONTHS[month];
+    }
+    return "";
+  });
+}
+
 export default function GitHubActivity() {
   const [data, setData] = useState<GitHubData | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
@@ -98,19 +117,33 @@ export default function GitHubActivity() {
           className="gradient-border glass rounded-2xl p-5 md:p-6 mb-10 overflow-x-auto"
         >
           {status === "ready" && data ? (
-            <div className="flex gap-[3px] min-w-max mx-auto w-fit">
-              {data.weeks.map((week, wi) => (
-                <div key={wi} className="flex flex-col gap-[3px]">
-                  {week.map((day) => (
-                    <div
-                      key={day.date}
-                      title={`${day.contributionCount} contributions on ${day.date}`}
-                      className="w-[11px] h-[11px] rounded-[2px]"
-                      style={{ backgroundColor: levelColor(day.contributionCount) }}
-                    />
-                  ))}
-                </div>
-              ))}
+            <div className="min-w-max mx-auto w-fit">
+              {/* Month labels */}
+              <div className="flex gap-[3px] mb-1.5">
+                {monthLabels(data.weeks).map((label, i) => (
+                  <div
+                    key={i}
+                    className="w-[11px] text-[10px] leading-none text-slate-500 dark:text-slate-400 overflow-visible whitespace-nowrap"
+                  >
+                    {label}
+                  </div>
+                ))}
+              </div>
+              {/* Day cells */}
+              <div className="flex gap-[3px]">
+                {data.weeks.map((week, wi) => (
+                  <div key={wi} className="flex flex-col gap-[3px]">
+                    {week.map((day) => (
+                      <div
+                        key={day.date}
+                        title={`${day.contributionCount} contributions on ${day.date}`}
+                        className="w-[11px] h-[11px] rounded-[2px]"
+                        style={{ backgroundColor: levelColor(day.contributionCount) }}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <div className="h-28 flex items-center justify-center text-slate-400 dark:text-slate-500 text-sm">

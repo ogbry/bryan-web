@@ -62,8 +62,8 @@ export default function Home() {
         <About />
         <Portfolio />
         <ServicesGrid />
-        <Experience />
         <GitHubActivity />
+        <Experience />
         <Contact />
       </main>
 

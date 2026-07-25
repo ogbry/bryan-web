@@ -1,74 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 
+const CALENDLY_URL = "https://calendly.com/alfuentebryan25/new-meeting";
+
+declare global {
+  interface Window {
+    Calendly?: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
+
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    whatsapp: "",
-    subject: "",
-    message: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
-  const [contactError, setContactError] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
+  const [calendlyReady, setCalendlyReady] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  useEffect(() => {
+    let active = true;
+    fetch("/api/config")
+      .then((r) => r.json())
+      .then((c) => active && setWhatsappUrl(c.whatsappUrl || ""))
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Load Calendly's popup widget assets once.
+  useEffect(() => {
+    const cssId = "calendly-widget-css";
+    if (!document.getElementById(cssId)) {
+      const link = document.createElement("link");
+      link.id = cssId;
+      link.rel = "stylesheet";
+      link.href = "https://assets.calendly.com/assets/external/widget.css";
+      document.head.appendChild(link);
+    }
 
-    // Require at least one way to reply: email or WhatsApp
-    if (!formData.email.trim() && !formData.whatsapp.trim()) {
-      setContactError(true);
+    const scriptId = "calendly-widget-js";
+    const existing = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (existing) {
+      if (window.Calendly) setCalendlyReady(true);
+      else existing.addEventListener("load", () => setCalendlyReady(true));
       return;
     }
-    setContactError(false);
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = () => setCalendlyReady(true);
+    document.body.appendChild(script);
+  }, []);
 
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
-
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to send message");
-      }
-
-      setSubmitStatus("success");
-      setFormData({ name: "", email: "", whatsapp: "", subject: "", message: "" });
-
-      setTimeout(() => {
-        setSubmitStatus("idle");
-      }, 5000);
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setSubmitStatus("error");
-
-      setTimeout(() => {
-        setSubmitStatus("idle");
-      }, 5000);
-    } finally {
-      setIsSubmitting(false);
+  const openCalendly = useCallback(() => {
+    if (window.Calendly) {
+      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+    } else {
+      // Fallback: open the scheduling page in a new tab if the script failed.
+      window.open(CALENDLY_URL, "_blank", "noopener,noreferrer");
     }
-  };
+  }, []);
 
   return (
     <section
@@ -77,348 +70,134 @@ export default function Contact() {
     >
       {/* ambient glow */}
       <div className="absolute bottom-10 left-1/4 w-80 h-80 rounded-full blur-[150px] bg-blue-400/8 dark:bg-blue-600/10 pointer-events-none" />
-      {submitStatus === "success" && (
-        <motion.div
-          initial={{ opacity: 0, y: -50, x: "-50%" }}
-          animate={{ opacity: 1, y: 20, x: "-50%" }}
-          exit={{ opacity: 0, y: -50, x: "-50%" }}
-          className="fixed top-0 left-1/2 z-50 max-w-md w-full mx-4"
-        >
-          <div className="p-4 bg-green-600 dark:bg-green-500 rounded-xl shadow-2xl text-white">
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-6 h-6 flex-shrink-0"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <div className="flex-1">
-                <p className="font-semibold">Message sent successfully!</p>
-                <p className="text-sm text-green-100">
-                  I'll get back to you soon.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
 
-      {submitStatus === "error" && (
-        <motion.div
-          initial={{ opacity: 0, y: -50, x: "-50%" }}
-          animate={{ opacity: 1, y: 20, x: "-50%" }}
-          exit={{ opacity: 0, y: -50, x: "-50%" }}
-          className="fixed top-0 left-1/2 z-50 max-w-md w-full mx-4"
-        >
-          <div className="p-4 bg-red-600 dark:bg-red-500 rounded-xl shadow-2xl text-white">
-            <div className="flex items-center gap-3">
-              <svg
-                className="w-6 h-6 flex-shrink-0"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <div className="flex-1">
-                <p className="font-semibold">Oops! Something went wrong.</p>
-                <p className="text-sm text-red-100">
-                  Please try again or email me directly.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-
-      <div className="container max-w-5xl px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-cyan-600 dark:text-cyan-400 mb-4">
-            Get In Touch
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900 dark:text-white tracking-tight">
-            Let&apos;s Work <span className="text-neon-gradient">Together</span>
-          </h2>
-          <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl mx-auto">
-            Have a project in mind or just want to connect? Fill out the form
-            below and I'll get back to you as soon as possible.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-3 gap-8 items-start">
+      <div className="container max-w-6xl px-6 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-stretch">
+          {/* Left: pitch panel */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="space-y-6"
+            className="flex flex-col justify-center"
           >
-<div className="gradient-border glass rounded-2xl p-6 hover:shadow-2xl transition-all">
-              <div className="flex items-start gap-4">
+            <span className="inline-flex items-center gap-2 self-start px-3 py-1.5 glass rounded-full mb-6">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
+              <span className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                Available for new projects
+              </span>
+            </span>
+
+            <span className="inline-block text-xs font-semibold tracking-[0.25em] uppercase text-cyan-600 dark:text-cyan-400 mb-4">
+              Get In Touch
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-5 text-slate-900 dark:text-white tracking-tight leading-tight">
+              Let&apos;s build <span className="text-neon-gradient">something</span> together.
+            </h2>
+            <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-md leading-relaxed">
+              Have a project in mind, a role to fill, or just want to talk shop?
+              Book a quick call or reach out on WhatsApp — I&apos;ll get back to
+              you fast.
+            </p>
+
+            {/* Channels */}
+            <div className="space-y-4">
+              {/* WhatsApp */}
+              <a
+                href={whatsappUrl || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-disabled={!whatsappUrl}
+                className={`group gradient-border glass rounded-2xl p-4 flex items-center gap-4 hover:shadow-2xl transition-all ${
+                  !whatsappUrl ? "pointer-events-none opacity-60" : ""
+                }`}
+              >
+                <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl flex items-center justify-center shadow-[0_0_16px_-5px_rgba(16,185,129,0.6)]">
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                    Chat on WhatsApp
+                  </div>
+                  <div className="font-medium text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    Message me directly
+                  </div>
+                </div>
+                <svg className="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </a>
+
+              {/* Location */}
+              <div className="gradient-border glass rounded-2xl p-4 flex items-center gap-4">
                 <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center shadow-[0_0_16px_-5px_rgba(37,99,235,0.6)]">
-                  <svg
-                    className="w-6 h-6 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
                 <div>
-                  <div className="text-sm text-slate-500 dark:text-slate-400 mb-1">
-                    Location
+                  <div className="text-sm text-slate-500 dark:text-slate-400">
+                    Based in
                   </div>
                   <div className="font-medium text-slate-900 dark:text-white">
-                    Legazpi City, Albay
-                    <br />
-                    Philippines
+                    Legazpi City, Albay · Philippines
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="gradient-border glass rounded-2xl p-6 hover:shadow-2xl transition-all">
-              <div className="text-sm text-slate-500 dark:text-slate-400 mb-4">
-                Connect with me
-              </div>
-              <div className="flex gap-3">
-                {[
-                  {
-                    name: "LinkedIn",
-                    href: "https://www.linkedin.com/in/bryan-alfuente-725a5b187/",
-                    icon: "M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z",
-                    color: "from-blue-600 to-blue-700",
-                  },
-                  {
-                    name: "GitHub",
-                    href: "https://github.com/ogbry",
-                    icon: "M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z",
-                    color: "from-slate-700 to-slate-900",
-                  },
-                  {
-                    name: "Facebook",
-                    href: "https://www.facebook.com/tengenexD/",
-                    icon: "M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z",
-                    color: "from-sky-500 to-blue-600",
-                  },
-                ].map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.href}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`w-10 h-10 bg-gradient-to-br ${social.color} rounded-lg flex items-center justify-center transition-all hover:shadow-lg`}
-                    aria-label={social.name}
-                  >
-                    <svg
-                      className="w-5 h-5 text-white"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d={social.icon} />
-                    </svg>
-                  </motion.a>
-                ))}
               </div>
             </div>
           </motion.div>
 
+          {/* Right: Book a call CTA */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="md:col-span-2"
           >
-            <form
-              onSubmit={handleSubmit}
-              className="gradient-border glass rounded-2xl p-8 shadow-xl"
-            >
-              <div className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
-                  >
-                    Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
-                    placeholder="John Doe"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
-                  >
-                    Your Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
-                    placeholder="john@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="whatsapp"
-                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
-                  >
-                    WhatsApp Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="whatsapp"
-                    name="whatsapp"
-                    value={formData.whatsapp}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
-                    placeholder="+63 912 345 6789"
-                  />
-                  <p
-                    className={`mt-2 text-xs ${
-                      contactError
-                        ? "text-red-500 dark:text-red-400"
-                        : "text-slate-500 dark:text-slate-400"
-                    }`}
-                  >
-                    {contactError
-                      ? "Please provide your email or WhatsApp number so I can reply."
-                      : "Leave your email or WhatsApp (at least one) so I can get back to you."}
-                  </p>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
-                  >
-                    Subject *
-                  </label>
-                  <input
-                    type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all"
-                    placeholder="Project Inquiry"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2"
-                  >
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-white/[0.04] border border-slate-300 dark:border-white/10 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 focus:border-transparent transition-all resize-none"
-                    placeholder="Tell me about your project or idea..."
-                  />
-                </div>
-
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting}
-                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                  className={`w-full px-8 py-4 bg-gradient-to-r from-blue-700 to-blue-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-[0_8px_26px_-8px_rgba(37,99,235,0.6)] transition-all flex items-center justify-center gap-2 ${
-                    isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg
-                        className="animate-spin h-5 w-5 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
-                        <path
-                          className="opacity-75"
-                          fill="currentColor"
-                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                      </svg>
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                        />
-                      </svg>
-                      Send Message
-                    </>
-                  )}
-                </motion.button>
+            <div className="gradient-border glass rounded-2xl p-8 md:p-10 shadow-xl h-full flex flex-col items-center justify-center text-center">
+              {/* Icon */}
+              <div className="w-16 h-16 mb-6 rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-[0_0_24px_-4px_rgba(37,99,235,0.6)]">
+                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
               </div>
-            </form>
+
+              <h3 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-3">
+                Book a 15-min intro call
+              </h3>
+              <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-sm leading-relaxed">
+                Pick a time that works for you and let&apos;s talk about your
+                project, role, or idea. No pressure — just a quick chat.
+              </p>
+
+              <motion.button
+                onClick={openCalendly}
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className="group relative px-8 py-4 text-white font-semibold rounded-2xl overflow-hidden glow-blue"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-500 transition-transform duration-500 group-hover:scale-110" />
+                <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-r from-blue-600 to-cyan-500" />
+                <span className="relative flex items-center gap-2">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Book a Call
+                </span>
+              </motion.button>
+
+              <p className="mt-5 text-xs text-slate-400 dark:text-slate-500">
+                {calendlyReady
+                  ? "Powered by Calendly · opens in a popup"
+                  : "Loading scheduler…"}
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>

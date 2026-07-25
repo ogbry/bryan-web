@@ -8,8 +8,9 @@ type HeaderProps = {
 };
 
 const navItems = [
-  { name: "Skills", href: "#services" },
   { name: "Work", href: "#projects" },
+  { name: "Skills", href: "#services" },
+  { name: "GitHub", href: "#github" },
   { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
