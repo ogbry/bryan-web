@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { io, Socket } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 import ChatMessage, { Message } from "./ChatMessage";
+import { track } from "@/lib/track";
 
 type ConnectionStatus = "disconnected" | "connecting" | "connected" | "error";
 
@@ -201,6 +202,7 @@ export default function ChatWidget() {
     messages.filter((m) => m.sender === "visitor").length === 0;
 
   const openChat = () => {
+    if (!isOpen) track("chat_open");
     setIsOpen(true);
     setShowTeaser(false);
     setTeaserDismissed(true);

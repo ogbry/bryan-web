@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { track } from "@/lib/track";
 
 const techStack = [
   "React",
@@ -185,7 +186,10 @@ export default function Hero() {
                       <a
                         href="/Bryan_Alfuente_ATS_Resume.pdf"
                         download
-                        onClick={() => setResumeOpen(false)}
+                        onClick={() => {
+                          track("resume", "PDF");
+                          setResumeOpen(false);
+                        }}
                         className="flex items-center gap-3 px-5 py-3 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
                       >
                         <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
@@ -197,7 +201,10 @@ export default function Hero() {
                       <a
                         href="/Bryan_Alfuente_ATS_Resume.docx"
                         download
-                        onClick={() => setResumeOpen(false)}
+                        onClick={() => {
+                          track("resume", "DOCX");
+                          setResumeOpen(false);
+                        }}
                         className="flex items-center gap-3 px-5 py-3 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors"
                       >
                         <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24">

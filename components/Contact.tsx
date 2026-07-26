@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
+import { track } from "@/lib/track";
 
 const CALENDLY_URL = "https://calendly.com/alfuentebryan25/new-meeting";
 
@@ -55,6 +56,7 @@ export default function Contact() {
   }, []);
 
   const openCalendly = useCallback(() => {
+    track("book_call");
     if (window.Calendly) {
       window.Calendly.initPopupWidget({ url: CALENDLY_URL });
     } else {
@@ -110,6 +112,7 @@ export default function Contact() {
                 href={whatsappUrl || "#"}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => whatsappUrl && track("whatsapp")}
                 aria-disabled={!whatsappUrl}
                 className={`group gradient-border glass rounded-2xl p-4 flex items-center gap-4 hover:shadow-2xl transition-all ${
                   !whatsappUrl ? "pointer-events-none opacity-60" : ""
