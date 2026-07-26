@@ -19,6 +19,8 @@ export default function ChatWidget() {
   const [status, setStatus] = useState<ConnectionStatus>("disconnected");
   const [hasUnread, setHasUnread] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showTeaser, setShowTeaser] = useState(false);
+  const [teaserDismissed, setTeaserDismissed] = useState(false);
 
   const sessionId = useRef<string>("");
   const socketRef = useRef<Socket | null>(null);
@@ -67,6 +69,13 @@ export default function ChatWidget() {
       document.body.style.overflow = "";
     };
   }, [isMobile, isOpen]);
+
+  // Proactive teaser bubble — appears a few seconds after load, once, if unopened.
+  useEffect(() => {
+    if (isOpen || teaserDismissed) return;
+    const t = setTimeout(() => setShowTeaser(true), 4000);
+    return () => clearTimeout(t);
+  }, [isOpen, teaserDismissed]);
 
   const connectSocket = useCallback(
     (name: string) => {
@@ -158,6 +167,45 @@ export default function ChatWidget() {
     });
   };
 
+  // Send a preset quick-reply using the existing socket flow.
+  const sendQuickReply = (message: string) => {
+    if (!socketRef.current?.connected) return;
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: uuidv4(),
+        text: message,
+        sender: "visitor",
+        timestamp: new Date().toISOString(),
+        senderName: visitorName,
+      },
+    ]);
+    socketRef.current.emit("visitor_message", {
+      sessionId: sessionId.current,
+      visitorName,
+      message,
+      timestamp: new Date().toISOString(),
+    });
+  };
+
+  const quickReplies = [
+    "I have a project in mind",
+    "Are you available for work?",
+    "What's your tech stack?",
+  ];
+
+  // Show quick replies only at the very start of a conversation.
+  const showQuickReplies =
+    hasSetName &&
+    status === "connected" &&
+    messages.filter((m) => m.sender === "visitor").length === 0;
+
+  const openChat = () => {
+    setIsOpen(true);
+    setShowTeaser(false);
+    setTeaserDismissed(true);
+  };
+
   useEffect(() => {
     return () => {
       socketRef.current?.disconnect();
@@ -192,6 +240,51 @@ export default function ChatWidget() {
 
   return (
     <>
+      {/* Proactive teaser bubble */}
+      <AnimatePresence>
+        {!isOpen && showTeaser && (
+          <motion.div
+            initial={{ opacity: 0, y: 12, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 12, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 300, damping: 24 }}
+            className="fixed bottom-24 right-6 z-50 max-w-[240px]"
+          >
+            <button
+              onClick={openChat}
+              className="relative block text-left bg-white dark:bg-[#0a0d16] border border-slate-200 dark:border-white/10 rounded-2xl rounded-br-md px-4 py-3 shadow-xl hover:shadow-2xl transition-shadow"
+            >
+              <div className="flex items-center gap-2.5">
+                <img
+                  src="/image.jpeg"
+                  alt="Bryan"
+                  className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                />
+                <div>
+                  <p className="text-sm font-semibold text-slate-800 dark:text-white leading-tight">
+                    Hey! 👋 Got a question?
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    I usually reply fast here.
+                  </p>
+                </div>
+              </div>
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowTeaser(false);
+                setTeaserDismissed(true);
+              }}
+              className="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs shadow-md hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
+              aria-label="Dismiss"
+            >
+              ✕
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Floating trigger button */}
       <AnimatePresence>
         {!isOpen && (
@@ -202,20 +295,22 @@ export default function ChatWidget() {
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.92 }}
-            onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-full shadow-[0_8px_24px_-8px_rgba(37,99,235,0.7)] flex items-center justify-center text-white"
+            onClick={openChat}
+            className="group fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-br from-blue-600 to-cyan-500 rounded-full shadow-[0_8px_24px_-8px_rgba(37,99,235,0.7)] flex items-center justify-center text-white"
             aria-label="Open chat"
           >
+            {/* Idle pulse ring */}
+            <span className="absolute inset-0 rounded-full bg-blue-500/40 animate-ping [animation-duration:2.5s]" />
             {hasUnread && (
               <motion.span
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold"
+                className="absolute -top-1 -right-1 z-10 w-5 h-5 bg-red-500 rounded-full border-2 border-white flex items-center justify-center text-[10px] font-bold"
               >
                 !
               </motion.span>
             )}
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="relative w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                 d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
             </svg>
@@ -329,6 +424,32 @@ export default function ChatWidget() {
                   {messages.map((msg) => (
                     <ChatMessage key={msg.id} message={msg} />
                   ))}
+
+                  {/* Quick-reply suggestion chips */}
+                  {showQuickReplies && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="pt-2"
+                    >
+                      <p className="text-[11px] uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-1">
+                        Quick start
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {quickReplies.map((qr) => (
+                          <button
+                            key={qr}
+                            onClick={() => sendQuickReply(qr)}
+                            className="px-3 py-1.5 text-xs font-medium rounded-full border border-blue-200 dark:border-blue-500/30 text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-500/10 hover:bg-blue-100 dark:hover:bg-blue-500/20 hover:border-blue-300 dark:hover:border-blue-400/50 transition-all"
+                          >
+                            {qr}
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+
                   <div ref={messagesEndRef} />
                 </div>
 

@@ -336,7 +336,7 @@ export default function Portfolio() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="space-y-20 lg:space-y-28 max-w-6xl mx-auto">
           {projects.map((project, i) => {
             const activePlatformIndex = selectedPlatforms[i] || 0;
             const activePlatform = project.platforms
@@ -356,25 +356,156 @@ export default function Portfolio() {
               : project.github;
             const displayYear = activePlatform?.year ?? project.year;
 
+            // In-progress teaser (compact, centered) — keeps the "more coming" cue
+            if (project.inProgress) {
+              return (
+                <motion.div
+                  key={project.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                  className="relative flex flex-col items-center justify-center text-center rounded-3xl border-2 border-dashed border-slate-300 dark:border-white/10 py-14 px-6"
+                >
+                  <div className="w-14 h-14 mb-4 rounded-2xl bg-slate-100 dark:bg-white/5 flex items-center justify-center animate-pulse">
+                    <svg
+                      className="w-7 h-7 text-slate-400 dark:text-slate-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                      />
+                    </svg>
+                  </div>
+                  <p className="text-lg font-semibold text-slate-700 dark:text-slate-200">
+                    {project.title}
+                  </p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    {project.description}
+                  </p>
+                </motion.div>
+              );
+            }
+
+            // Ordinal among real (non-in-progress) projects, for numbering + alternating
+            const realIndex = projects
+              .slice(0, i)
+              .filter((p) => !p.inProgress).length;
+            const reversed = realIndex % 2 === 1;
+            const numberLabel = String(realIndex + 1).padStart(2, "0");
+
             return (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="gradient-border group relative glass rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
-            >
-              {project.inProgress ? (
-                /* Skeleton Loader for In-Progress Projects */
-                <>
-                  {/* Skeleton Image */}
-                  <div className="relative h-56 bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-600 animate-pulse">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
+              <motion.div
+                key={project.title}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6 }}
+                className={`group relative flex flex-col gap-8 lg:gap-14 lg:items-center ${
+                  reversed ? "lg:flex-row-reverse" : "lg:flex-row"
+                }`}
+              >
+                {/* Image side */}
+                <div className="lg:w-[56%] relative">
+                  <div className="gradient-border glass rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-shadow duration-300">
+                    {displayImages.length > 0 ? (
+                      <ImageCarousel
+                        images={displayImages}
+                        alt={project.title}
+                        height="h-64 sm:h-80 lg:h-[26rem]"
+                      />
+                    ) : (
+                      <div className="h-64 sm:h-80 lg:h-[26rem] bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center">
+                        <p className="text-slate-400 dark:text-slate-500 text-sm">
+                          Screenshots coming soon
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  {/* Year badge */}
+                  <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/80 dark:bg-white/10 backdrop-blur-md border border-slate-200/60 dark:border-white/15 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    {displayYear}
+                  </div>
+                </div>
+
+                {/* Content side */}
+                <div className="lg:w-[44%] relative">
+                  {/* Big index numeral */}
+                  <span
+                    aria-hidden
+                    className="block text-6xl lg:text-7xl font-black leading-none mb-4 text-transparent bg-clip-text bg-gradient-to-br from-slate-200 to-slate-300/40 dark:from-white/15 dark:to-white/5 select-none"
+                  >
+                    {numberLabel}
+                  </span>
+
+                  {/* Platform Switcher */}
+                  {project.platforms && project.platforms.length > 1 && (
+                    <div className="mb-4 flex gap-2">
+                      {project.platforms.map((platform, platformIndex) => (
+                        <button
+                          key={platform.name}
+                          onClick={() => togglePlatform(i, platformIndex)}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                            activePlatformIndex === platformIndex
+                              ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_0_14px_-5px_rgba(37,99,235,0.7)]"
+                              : "bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10"
+                          }`}
+                        >
+                          {platform.name === "Android" && (
+                            <svg
+                              className="w-4 h-4 inline-block mr-1.5"
+                              fill="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.5 11.5 0 0 0-8.94 0L5.65 5.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C2.92 10.84 1 13.97 1 17.5h22c0-3.53-1.92-6.66-5.4-8.02zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z" />
+                            </svg>
+                          )}
+                          {platform.name === "Web" && (
+                            <svg
+                              className="w-4 h-4 inline-block mr-1.5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                              />
+                            </svg>
+                          )}
+                          {platform.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Title + badges row */}
+                  <div className="flex flex-wrap items-center gap-3 mb-4">
+                    <h3 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">
+                      {project.title}
+                    </h3>
+                    {project.type && (
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full ${
+                          project.type === "Personal"
+                            ? "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
+                            : "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
+                        }`}
+                      >
+                        {project.type}
+                      </span>
+                    )}
+                    {project.status && (
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300">
                         <svg
-                          className="w-16 h-16 mx-auto mb-4 text-slate-400 dark:text-slate-500"
+                          className="w-3.5 h-3.5"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -382,219 +513,43 @@ export default function Portfolio() {
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeWidth={1.5}
-                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                            strokeWidth={2}
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                           />
                         </svg>
-                        <p className="text-slate-500 dark:text-slate-400 font-medium">
-                          In Progress
-                        </p>
-                      </div>
-                    </div>
-                    <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/80 dark:bg-white/10 backdrop-blur-md border border-slate-200/60 dark:border-white/15 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200">
-                      {project.year}
-                    </div>
-                  </div>
-
-                  {/* Skeleton Content */}
-                  <div className="p-6">
-                    <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded-lg mb-3 w-3/4 animate-pulse"></div>
-                    <div className="space-y-2 mb-6">
-                      <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
-                      <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded animate-pulse w-5/6"></div>
-                      <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded animate-pulse w-4/6"></div>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {[1, 2, 3].map((_, idx) => (
-                        <div
-                          key={idx}
-                          className="h-7 w-20 bg-slate-200 dark:bg-slate-700 rounded-lg animate-pulse"
-                        ></div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                /* Normal Project Card */
-                <>
-                  {/* Image Carousel */}
-                  <div className="relative">
-                    {displayImages.length > 0 ? (
-                      <ImageCarousel
-                        images={displayImages}
-                        alt={project.title}
-                        height="h-56"
-                      />
-                    ) : (
-                      <div className="h-56 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 flex items-center justify-center">
-                        <p className="text-slate-400 dark:text-slate-500 text-sm">
-                          Screenshots coming soon
-                        </p>
-                      </div>
+                        {project.status}
+                      </span>
                     )}
-                    <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-white/80 dark:bg-white/10 backdrop-blur-md border border-slate-200/60 dark:border-white/15 rounded-full text-xs font-semibold text-slate-700 dark:text-slate-200">
-                      {displayYear}
-                    </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="p-6">
-                    {/* Platform Switcher */}
-                    {project.platforms && project.platforms.length > 1 && (
-                      <div className="mb-4 flex gap-2">
-                        {project.platforms.map((platform, platformIndex) => (
-                          <button
-                            key={platform.name}
-                            onClick={() => togglePlatform(i, platformIndex)}
-                            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                              activePlatformIndex === platformIndex
-                                ? "bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_0_14px_-5px_rgba(37,99,235,0.7)]"
-                                : "bg-slate-100 dark:bg-white/5 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/10"
-                            }`}
-                          >
-                            {platform.name === "Android" && (
-                              <svg
-                                className="w-4 h-4 inline-block mr-1.5"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.5 11.5 0 0 0-8.94 0L5.65 5.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C2.92 10.84 1 13.97 1 17.5h22c0-3.53-1.92-6.66-5.4-8.02zM7 15.25c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25zm10 0c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z" />
-                              </svg>
-                            )}
-                            {platform.name === "Web" && (
-                              <svg
-                                className="w-4 h-4 inline-block mr-1.5"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                                />
-                              </svg>
-                            )}
-                            {platform.name}
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                  <p className="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                    {project.description}
+                  </p>
 
-                    <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:bg-clip-text group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 dark:group-hover:from-blue-400 dark:group-hover:to-indigo-400 transition-all">
-                      {project.title}
-                    </h3>
-                    <p className="text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
-                      {project.description}
-                    </p>
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2 mb-7">
+                    {displayTech.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 bg-slate-100/80 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 text-xs font-medium rounded-lg border border-slate-200 dark:border-white/10 group-hover:border-cyan-400/40 dark:group-hover:border-cyan-400/30 transition-colors"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
 
-                    {/* Website Link & Project Type */}
-                    <div className="mb-6 flex flex-wrap items-center gap-3">
-                      {displayWebsite && (
-                        <>
-                          {displayWebsite.startsWith("http") ? (
-                            <a
-                              href={displayWebsite}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-                            >
-                              <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                />
-                              </svg>
-                              {activePlatform?.name === "Android" ? "Download on Play Store" : "Visit Website"}
-                            </a>
-                          ) : (
-                            <span className="inline-flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                              <svg
-                                className="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                                />
-                              </svg>
-                              {displayWebsite}
-                            </span>
-                          )}
-                        </>
-                      )}
-
-                      {/* GitHub Link */}
-                      {displayGithub && (
+                  {/* Action buttons */}
+                  <div className="flex flex-wrap items-center gap-3">
+                    {displayWebsite &&
+                      (displayWebsite.startsWith("http") ? (
                         <a
-                          href={displayGithub}
+                          href={displayWebsite}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-700 to-blue-500 shadow-lg hover:shadow-[0_8px_26px_-8px_rgba(37,99,235,0.6)] transition-all"
                         >
                           <svg
                             className="w-4 h-4"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                          </svg>
-                          GitHub
-                        </a>
-                      )}
-
-                      {/* Project Type Badge */}
-                      {project.type && (
-                        <span
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full ${
-                            project.type === "Personal"
-                              ? "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
-                              : "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300"
-                          }`}
-                        >
-                          <svg
-                            className="w-3.5 h-3.5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            {project.type === "Personal" ? (
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                              />
-                            ) : (
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                              />
-                            )}
-                          </svg>
-                          {project.type}
-                        </span>
-                      )}
-
-                      {/* Status Badge */}
-                      {project.status && (
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300">
-                          <svg
-                            className="w-3.5 h-3.5"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -603,32 +558,52 @@ export default function Portfolio() {
                               strokeLinecap="round"
                               strokeLinejoin="round"
                               strokeWidth={2}
-                              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                             />
                           </svg>
-                          {project.status}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2">
-                      {displayTech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 bg-slate-100/80 dark:bg-white/[0.04] text-slate-700 dark:text-slate-300 text-xs font-medium rounded-lg border border-slate-200 dark:border-white/10 group-hover:border-cyan-400/40 dark:group-hover:border-cyan-400/30 transition-colors"
-                        >
-                          {tech}
+                          {activePlatform?.name === "Android"
+                            ? "Download on Play Store"
+                            : "Visit Website"}
+                        </a>
+                      ) : (
+                        <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/5">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                            />
+                          </svg>
+                          {displayWebsite}
                         </span>
                       ))}
-                    </div>
-                  </div>
 
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-cyan-400/50 dark:group-hover:border-cyan-400/40 rounded-2xl transition-all duration-300 pointer-events-none"></div>
-                </>
-              )}
-            </motion.div>
+                    {displayGithub && (
+                      <a
+                        href={displayGithub}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold glass text-slate-700 dark:text-slate-200 hover:border-cyan-400/60 dark:hover:border-cyan-400/50 transition-all"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        GitHub
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
             );
           })}
         </div>
