@@ -3,8 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ImageCarousel from "./ImageCarousel";
-// TODO: Add your image files to /Users/bryanalfuente/Projects/my-portfolio/assets/ first!
-// Then uncomment these imports:
 import spero_img1 from "../assets/spero_img1.jpeg";
 import spero_img2 from "../assets/spero_img2.jpeg";
 import spero_img3 from "../assets/spero_img3.jpeg";
@@ -83,55 +81,72 @@ export default function Experience() {
             6+ years of professional software development experience
           </p>
 
-          <div className="space-y-8">
-            {experiences.map((exp, i) => (
-              <motion.div
-                key={exp.company}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="gradient-border glass rounded-2xl p-6 transition-all hover:shadow-2xl"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
+          {/* Vertical timeline */}
+          <div className="relative pl-8 sm:pl-10">
+            {/* Spine */}
+            <div className="absolute left-[7px] sm:left-[9px] top-2 bottom-2 w-px bg-gradient-to-b from-cyan-400/60 via-blue-500/40 to-transparent" />
+
+            <div className="space-y-12">
+              {experiences.map((exp, i) => (
+                <motion.div
+                  key={exp.company}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="relative"
+                >
+                  {/* Node dot */}
+                  <span className="absolute -left-8 sm:-left-10 top-1.5 flex h-4 w-4 items-center justify-center">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-cyan-400/40 animate-ping" />
+                    <span className="relative h-3.5 w-3.5 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 ring-4 ring-slate-50 dark:ring-[#080b14] shadow-[0_0_10px_-2px_rgba(37,99,235,0.8)]" />
+                  </span>
+
+                  {/* Header row */}
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-1">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                       {exp.role}
                     </h3>
-                    <div className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-500/10 border border-cyan-200/60 dark:border-cyan-500/20 rounded-full px-3 py-1 self-start sm:self-auto whitespace-nowrap">
+                      {exp.period}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-4 text-sm">
+                    <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-cyan-400 dark:to-blue-400">
                       {exp.company}
+                    </span>
+                    <span className="text-slate-400 dark:text-slate-600">·</span>
+                    <span className="text-slate-500 dark:text-slate-500">
+                      {exp.location}
+                    </span>
+                  </div>
+
+                  {/* Achievements */}
+                  <ul className="space-y-2 mb-5">
+                    {exp.achievements.map((achievement, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-3 text-slate-600 dark:text-slate-400"
+                      >
+                        <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Work Moments Carousel (compact) */}
+                  {exp.images && exp.images.length > 0 && (
+                    <div className="max-w-md rounded-xl overflow-hidden gradient-border glass">
+                      <ImageCarousel
+                        images={exp.images}
+                        alt={`${exp.company} - ${exp.role}`}
+                        height="h-40"
+                      />
                     </div>
-                  </div>
-                  <div className="text-sm text-slate-500 dark:text-slate-500 md:text-right">
-                    <div>{exp.period}</div>
-                    <div>{exp.location}</div>
-                  </div>
-                </div>
-
-                {/* Work Moments Carousel */}
-                {exp.images && exp.images.length > 0 && (
-                  <div className="mb-6">
-                    <ImageCarousel
-                      images={exp.images}
-                      alt={`${exp.company} - ${exp.role}`}
-                      height="h-56"
-                    />
-                  </div>
-                )}
-
-                <ul className="space-y-2">
-                  {exp.achievements.map((achievement, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-start gap-3 text-slate-600 dark:text-slate-400"
-                    >
-                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
-                      <span>{achievement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
 
